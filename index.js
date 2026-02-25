@@ -192,15 +192,18 @@ const SSL_CERT_DIR = process.env.SSL_CERT_DIR || DEFAULT_CERT_DIR;
 const SSL_KEY_PATH = process.env.SSL_KEY_PATH || path.join(SSL_CERT_DIR, "privkey.pem");
 const SSL_CERT_PATH = process.env.SSL_CERT_PATH || path.join(SSL_CERT_DIR, "fullchain.pem");
 const SSL_CA_PATH = process.env.SSL_CA_PATH || path.join(SSL_CERT_DIR, "chain.pem");
-const PUXADAS_BASE_URL = process.env.PUXADAS_BASE_URL || "";
+const PUXADAS_BASE_URL = process.env.PUXADAS_BASE_URL || "https://api.turboo.sbs";
 const PUXADAS_TOKEN = process.env.PUXADAS_TOKEN || "";
 const PUXADAS_TOKEN_HEADER = process.env.PUXADAS_TOKEN_HEADER || "Authorization";
 const PUXADAS_TIMEOUT_MS = Number(process.env.PUXADAS_TIMEOUT_MS || 15000);
 const PUXADAS_RATE_LIMIT = Number(process.env.PUXADAS_RATE_LIMIT || 30);
+const PUXADAS_STYLE_RAW = String(process.env.PUXADAS_STYLE || "").toLowerCase().trim();
+const PUXADAS_STYLE = PUXADAS_STYLE_RAW || (PUXADAS_BASE_URL.includes("api.turboo.sbs") ? "query_apikey" : "path_token");
+const PUXADAS_CLIENT_TOKEN = PUXADAS_STYLE === "path_token" ? PUXADAS_TOKEN : "";
 
 const puxadasClient = createPuxadasClient({
   baseURL: PUXADAS_BASE_URL,
-  token: PUXADAS_TOKEN,
+  token: PUXADAS_CLIENT_TOKEN,
   tokenHeader: PUXADAS_TOKEN_HEADER,
   timeoutMs: PUXADAS_TIMEOUT_MS
 });
@@ -2052,6 +2055,27 @@ return { [paramName]: String(rawValue) };
 }
 }
 
+function buildPuxadasConsultaPath(tipo, value) {
+const safeTipo = String(tipo || "").trim();
+const safeValue = encodePathValuePreserveSlash(value);
+if (PUXADAS_STYLE === "query_apikey") {
+return `${safeTipo}=${safeValue}&apikey=${encodeURIComponent(PUXADAS_TOKEN)}`;
+}
+return `puxadas/${safeTipo}=${safeValue}/${encodeURIComponent(PUXADAS_TOKEN)}`;
+}
+
+function buildPuxadasWildcardPath(targetPath) {
+const cleanPath = String(targetPath || "").replace(/^\/+/, "");
+if (!cleanPath) return "";
+
+if (PUXADAS_STYLE === "query_apikey") {
+if (/(^|[?&])apikey=/i.test(cleanPath)) return cleanPath;
+const joiner = cleanPath.includes("?") || cleanPath.includes("&") ? "&" : "&";
+return `${cleanPath}${joiner}apikey=${encodeURIComponent(PUXADAS_TOKEN)}`;
+}
+return cleanPath;
+}
+
 async function executePuxadasConsulta({ tipo, apikey, query, compactValue = "" }) {
 if (!PUXADAS_BASE_URL || !PUXADAS_TOKEN) {
 throw createPuxadasHandledError(500, {
@@ -2081,7 +2105,7 @@ if (erro) {
 throw createPuxadasHandledError(403, { status: false, erro });
 }
 
-const upstreamPath = `puxadas/${tipo}=${encodePathValuePreserveSlash(value)}/${encodeURIComponent(PUXADAS_TOKEN)}`;
+const upstreamPath = buildPuxadasConsultaPath(tipo, value);
 return forwardPuxadasRequest(puxadasClient, {
 method: "GET",
 path: upstreamPath,
@@ -2096,7 +2120,9 @@ if (wantText) {
 const tipo = String(meta.tipo || "");
 const cpfLike = ["cpf", "cpf2", "cpf3", "cpf4", "cpf5", "cpfnacional", "score", "score2", "cnh", "srs", "fotorj"];
 const payload = proxied.data;
-const textOutput = cpfLike.includes(tipo)
+const textOutput = proxied.status >= 400
+? formatGenericTextResponse(payload)
+: cpfLike.includes(tipo)
 ? formatCpfDfsTechTextResponse(payload, req.query?.cpf || req.query?.score || req.query?.cnh || req.query?.srs || req.query?.fotorj)
 : formatGenericTextResponse(payload);
 return res.status(proxied.status).type("text/plain; charset=utf-8").send(textOutput);
@@ -2240,7 +2266,7 @@ delete body.apikey;
 
 const proxied = await forwardPuxadasRequest(puxadasClient, {
 method: req.method,
-path: targetPath,
+path: buildPuxadasWildcardPath(targetPath),
 query,
 body
 });

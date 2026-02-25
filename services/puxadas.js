@@ -33,6 +33,31 @@ function createPuxadasClient({ baseURL, token, tokenHeader = "Authorization", ti
 
 function parseUpstreamError(error) {
   if (error.response) {
+    const rawData = error.response.data;
+    if (typeof rawData === "string") {
+      const html = rawData;
+      const hasErrorPayload = /window\.__ERROR__\s*=/.test(html);
+      if (hasErrorPayload) {
+        const match = html.match(/window\.__ERROR__\s*=\s*(\{[\s\S]*?\});/);
+        if (match && match[1]) {
+          try {
+            const parsed = JSON.parse(match[1]);
+            const resultado = parsed?.resultado || {};
+            return {
+              status: error.response.status || 502,
+              data: {
+                status: false,
+                erro: resultado?.erro || parsed?.mensagem || "Erro retornado pela API PUXADAS.",
+                detalhes: parsed?.detalhes || null,
+                rota: parsed?.rota || null
+              }
+            };
+          } catch {
+            // fallback padrão abaixo
+          }
+        }
+      }
+    }
     return {
       status: error.response.status || 502,
       data: error.response.data || { status: false, erro: "Erro retornado pela API PUXADAS." }

@@ -4,7 +4,7 @@
     "nick": "OBrabo Dev",
     "senha": "",
     "apikey": "ObraboDev",
-    "level": "10000000493.7",
+    "level": "10000000494.0",
     "foto": "https://files.catbox.moe/xecu84.jpg",
     "request": 0,
     "adm": true,
@@ -17,7 +17,7 @@
     "subscription_status": "approved",
     "created_at": "2026-02-25T06:41:56.591Z",
     "quota_month": "2026-02",
-    "quota_used": 0,
+    "quota_used": 3,
     "api_keys": [
       {
         "id": "key_36eff11cc15a1c55",
@@ -37,9 +37,9 @@
     "nick": "DFS TECH",
     "senha": "",
     "apikey": "DfsTechConect13",
-    "level": "10000002.7",
+    "level": "10000022.6",
     "foto": "https://files.catbox.moe/lldieg.jpg",
-    "request": 9999974,
+    "request": 9999775,
     "adm": true,
     "vip": false,
     "lastRequestResetAt": "2026-02-25T00:48:56.987Z",
@@ -50,7 +50,7 @@
     "subscription_status": "approved",
     "created_at": "2026-02-25T06:41:56.591Z",
     "quota_month": "2026-02",
-    "quota_used": 2,
+    "quota_used": 201,
     "api_keys": [
       {
         "id": "key_acd4843cbd0c13af",

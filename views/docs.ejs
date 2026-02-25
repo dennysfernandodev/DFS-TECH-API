@@ -1,0 +1,2919 @@
+
+<!DOCTYPE html>
+
+<html lang="zxx" dir="ltr" class="light">
+
+<head>
+
+<style>
+  body {
+    background: rgba(0, 0, 0, 0.7) url(<%= wallpaper %>) no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  * {
+    background-color: transparent !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  iconify-icon,
+  svg,
+  i,
+  .nav-icon {
+    color: white !important;
+    fill: white !important;
+  }
+
+  button,
+  .button,
+  .btn {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  }
+
+  a {
+    color: white !important;
+  }
+
+  .app-header,
+  .sidebar-wrapper,
+  .sidebar-menus,
+  .dropdown-menu,
+  .modal-dialog,
+  .main-menu,
+  .nav-tools {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px);
+  }
+
+  .shadow-sm,
+  .shadow,
+  .dark\:shadow-slate-700 {
+    box-shadow: none !important;
+  }
+  
+  .borda-transparente {
+  border: 1.5px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+  /* Corrige contraste do dropdown do painel de puxadas */
+  #painel-puxadas select,
+  #painel-puxadas select option {
+    background-color: #121212 !important;
+    color: #f8fafc !important;
+  }
+
+  #painel-puxadas select option:checked,
+  #painel-puxadas select option:hover {
+    background-color: #0ea5e9 !important;
+    color: #ffffff !important;
+  }
+
+  #painel-puxadas select:focus {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.25) !important;
+  }
+
+  #dashboardParticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+</style>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <title><%= nomeApi %></title>
+  <link rel="icon" type="image/png" href="https://files.catbox.moe/w6l8pf.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- BEGIN: Theme CSS-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/65e1d2a3ef.js" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="canonical" href="https://demo-basic.adminkit.io/">
+<link href="https://fonts.googleapis.com/css2?family=Original+Surfer&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" type="text/css"
+media="all" />
+
+  <link rel="stylesheet" href="assets/css/rt-plugins.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <!-- End : Theme CSS-->
+  <script src="assets/js/settings.js" sync></script>
+
+<style>
+  /* Fundo translúcido com leve tom preto */
+  .sidebar-wrapper,
+  .sidebar-menus,
+  .app-header,
+  .dropdown-menu,
+  .modal-dialog,
+  .main-menu,
+  .navItem,
+  .nav-tools,
+  .bg-white,
+  .dark\:bg-slate-800,
+  .bg-slate-900 {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(8px);
+  }
+
+  /* Textos em branco */
+  .sidebar-menu-title,
+  .sidebar-menu a,
+  .text-box,
+  .navItem span,
+  .navItem,
+  .icon-arrow,
+  .text-slate-900,
+  .text-slate-800,
+  .text-slate-600,
+  .dark\:text-white,
+  .dark\:text-slate-200 {
+    color: white !important;
+  }
+
+  /* Ícones em branco */
+  .nav-icon,
+  iconify-icon,
+  .icon-arrow,
+  svg {
+    color: white !important;
+    fill: white !important;
+  }
+
+  /* Bordas em branco */
+  .border-slate-900,
+  .border-slate-600 {
+    border-color: white !important;
+  }
+
+  /* Botões translúcidos */
+  button,
+  a.button,
+  .hover\:bg-slate-100:hover,
+  .dark\:hover\:bg-slate-600:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Remover sombras fortes */
+  .shadow-sm,
+  .dark\:shadow-slate-700 {
+    box-shadow: none !important;
+  }
+</style>
+
+</head>
+<style>
+body {
+font-family: 'Poppins', sans-serif;
+background: #000000 !important;
+color: white;
+}
+  
+     .rank-box {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+      color: white;
+      max-width: 400px;
+      margin: 50px auto;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      z-index: 1;
+      position: relative;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    
+    .borda-transparente {
+      padding: 18px;
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      backdrop-filter: blur(6px);
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    
+    .nav-tools button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+</style>
+<body>
+<canvas id="dashboardParticles"></canvas>
+
+<audio id="dashboardMusic" autoplay loop="true" src="<%= musica %>"></audio>
+  <main class="app-wrapper">
+    <!-- BEGIN: Sidebar -->
+    <!-- BEGIN: Sidebar -->
+    <div class="sidebar-wrapper group">
+      <div id="bodyOverlay" class="w-screen h-screen fixed top-0 bg-slate-900 bg-opacity-50 backdrop-blur-sm z-10 hidden"></div>
+      <div class="logo-segment">
+        <a class="flex items-center" href="index.html">
+          <img src="LINK" class="" alt="">
+          <img src="LINK" class="" alt="">
+          <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter font-bold text-slate-900 dark:text-white"><%= nomeApi %></span>
+        </a>
+        <!-- Sidebar Type Button -->
+        <div id="sidebar_type" class="cursor-pointer text-slate-900 dark:text-white text-lg">
+          <span class="sidebarDotIcon extend-icon cursor-pointer text-slate-900 dark:text-white text-2xl">
+        <div class="h-4 w-4 border-[1.5px] border-slate-900 dark:border-slate-700 rounded-full transition-all duration-150 ring-2 ring-inset ring-offset-4 ring-black-900 dark:ring-slate-400 bg-slate-900 dark:bg-slate-400 dark:ring-offset-slate-700"></div>
+      </span>
+          <span class="sidebarDotIcon collapsed-icon cursor-pointer text-slate-900 dark:text-white text-2xl">
+        <div class="h-4 w-4 border-[1.5px] border-slate-900 dark:border-slate-700 rounded-full transition-all duration-150"></div>
+</span>
+</div>
+<button class="sidebarCloseIcon text-2xl">
+<iconify-icon class="text-slate-900 dark:text-slate-200" icon="clarity:window-close-line"></iconify-icon>
+</button>
+</div>
+<div id="nav_shadow" class="nav_shadow h-[60px] absolute top-[80px] nav-shadow z-[1] w-full transition-all duration-200 pointer-events-none
+      opacity-0"></div>
+<div class="sidebar-menus bg-white dark:bg-slate-800 py-2 px-4 h-[calc(100%-80px)] overflow-y-auto z-50" id="sidebar_menus">
+
+<ul class="sidebar-menu">
+<li class="sidebar-menu-title">Painel</li>
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="catppuccin:folder-admin-open"></iconify-icon>
+<span>Admin</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+
+<ul class="sidebar-submenu">
+<li>
+<li><a href="/adm">Painel adm</a></li>
+</ul>
+</li>
+
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="humbleicons:download"></iconify-icon>
+<span>Download</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+<ul class="sidebar-submenu">
+<li>
+
+<li><a href="/api/download/mix?nome=mc gury&apikey=<%= apikey %>">Play Mix</a></li>
+<li><a href="/api/download/play?nome=o bob voltou&apikey=<%= apikey %>">Play Audio</a></li>
+<li><a href="/api/download/playv2?url=https://youtube.com/watch?v=Wxwa4eZs-GA&apikey=<%= apikey %>">Play Audio v2</a></li>
+<li><a href="/api/download/playv3?nome=matue m4&apikey=<%= apikey %>">Play Audio v3</a></li>
+<li><a href="/api/download/playvd?nome=o bob voltou&apikey=<%= apikey %>">Play video</a></li>
+<li><a href="/api/download/playvdv2?nome=música do naruto my frends&apikey=<%= apikey %>">Play vídeo v2</a></li>
+<li><a href="/api/download/tiktok?url=https://vm.tiktok.com/ZMBDuK8dA/&apikey=<%= apikey %>">TikTokdl</a></li>
+<li><a href="/api/download/tiktok/video?url=https://vm.tiktok.com/ZMBDuK8dA/&apikey=<%= apikey %>">TikTok vídeo direto</a></li>
+<li><a href="/api/download/mediafire?url=https://www.mediafire.com/file/dcp1eg3gjsp23y0/ALEATORY_3.6.zip/file&apikey=<%= apikey %>">Mediafire</a></li>
+<li><a href="/api/download/audiomeme?nome=meme&apikey=<%= apikey %>">Áudio Meme</a></li>
+<li><a href="/api/public/youtube/search?nome=lote%2088">YouTube Search Público</a></li>
+<li><a href="/api/public/youtube/video?nome=lote%2088">YouTube Vídeo Público</a></li>
+<li><a href="/api/public/youtube/download?nome=lote%2088">YouTube Download Público</a></li>
+</ul>
+</li>
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="lets-icons:search-light"></iconify-icon>
+<span>Pesquisas</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+<ul class="sidebar-submenu">
+<li>
+<li><a href="/api/pesquisa/youtube?nome=bob voltou&apikey=<%= apikey %>">YouTube</a></li>
+<li><a href="/api/pesquisa/youtube2?nome=bob voltou&apikey=<%= apikey %>">YouTube2</a></li>
+<li><a href="/api/pesquisa/youtubeCanal?nome=@H-RickyTheJhocker&apikey=<%= apikey %>">YouTube Canal</a></li>
+<li><a href="/api/pesquisa/transcricao?url=https://youtu.be/sCIVCh6qV_A?si=wnGsxLZpMo3A128C&apikey=<%= apikey %>">YouTube Transcrição</a></li>
+<li><a href="/api/pesquisa/pensadorPesquisa?query=poesia&apikey=<%= apikey %>">Pensador</a></li>
+<li><a href="/api/pesquisa/pensadorFrases?query=poesia&apikey=<%= apikey %>">Pensador 2</a></li>
+<li><a href="/api/pesquisa/frasesDeAmor?query=QUERY&apikey=<%= apikey %>">Frases Amor</a></li>
+<li><a href="/api/pesquisa/pinterest?nome=Naruto&apikey=<%= apikey %>">Pinterest</a></li>
+<li><a href="/api/pesquisa/pinterest2?nome=Naruto&apikey=<%= apikey %>">Pinterest2</a></li>
+<li><a href="/api/pesquisa/anime?nome=@H-RickyTheJhocker&apikey=<%= apikey %>">Animes</a></li>
+<li><a href="/api/pesquisa/pinterestgif?nome=Naruto&apikey=<%= apikey %>">Pinterest gif</a></li>
+<li><a href="/api/pesquisa/PinterestMultiMidia?url=https://pin.it/3S7cq2oBs&apikey=<%= apikey %>">Pinterest Mídia</a></li>
+<li><a href="/api/pesquisa/wallpaper?query=anime&apikey=<%= apikey %>">Wallpaper</a></li>
+<li><a href="/api/pesquisa/wallpaper2?query=anime&apikey=<%= apikey %>">Wallpaper 2</a></li>
+<li><a href="/api/pesquisa/hentai?query=anime&apikey=<%= apikey %>">Hentai</a></li>
+<li><a href="/api/pesquisa/amazon?nome=celular&apikey=<%= apikey %>">Amazon</a></li>
+<li><a href="/api/pesquisa/playstore?query=pou&apikey=<%= apikey %>">Playstore</a></li>
+<li><a href="/api/pesquisa/gimage?q=naruto&apikey=<%= apikey %>">Gimage</a></li>
+<li><a href="/api/pesquisa/freefirelike?query=playerId=371412786&apikey=<%= apikey %>&req=5&delay=1500">Like Free Fire</a></li>
+<li><a href="/api/pesquisa/pokemon?nome=pikachu&apikey=<%= apikey %>">Pokemon</a></li>
+<li><a href="/api/pesquisa/pokemon2?nome=pikachu&apikey=<%= apikey %>">Pokemon2</a></li>
+</ul>
+</li>
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="mage:robot-appreciate"></iconify-icon>
+<span>Inteligência artificial</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+<ul class="sidebar-submenu">
+<li>
+<li>
+<a href="/api/ai/texto/chatgpt?query=Bom%20dia&apikey=<%= apikey %>">Chatgpt</a>
+<a href="/api/ai/texto/gemini?query=Bom%20dia&apikey=<%= apikey %>">Gemini</a>
+<a href="/api/ai/imagem/imagemAi?query=gato%20rosa&apikey=<%= apikey %>">imagem Ai</a>
+<a href="/api/ai/sticker/stickAi?query=gato%20preto&apikey=<%= apikey %>">Sticker Ai</a>
+<a href="/api/ai/hd/imagem?url=https://files.catbox.moe/w6l8pf.jpg&apikey=<%= apikey %>">Imagens para HD</a>
+</ul>
+</li>
+
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="lineicons:canva"></iconify-icon>
+<span>Canvas</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+<ul class="sidebar-submenu">
+<li>
+<li><a href="/api/canva/bemVindo?titulo=DFS TECH API&avatar=<%= fotoApi %>&fundo=https://files.catbox.moe/w6l8pf.jpg&desc=Seja bem-vindo usuário&nome=Tosh DFS TECH&apikey=<%= apikey %>">Bem-Vindo/Saiu</a></li>
+<li><a href="/api/canva/bemVindo2?titulo=DFS TECH API&avatar=<%= fotoApi %>&fundo=https://files.catbox.moe/w6l8pf.jpg&desc=Seja bem-vindo usuário&nome=Tosh DFS TECH&apikey=<%= apikey %>">Bem-Vindo/Saiu2</a></li>
+<li><a href="/api/canva/level?nome=DFS TECH API&avatar=<%= fotoApi %>&fundo=https://files.catbox.moe/w6l8pf.jpg&level1=1&level2=2&apikey=<%= apikey %>">Level</a></li>
+<li><a href="/api/canva/musicCard?name=DFS TECH API&avatar=<%= fotoApi %>&artistName=Tosh DFS TECH &time=1,36&apikey=<%= apikey %>">Music Card</a></li>
+<li><a href="/api/canva/musicCard2?name=DFS TECH API&avatar=<%= fotoApi %>&artistName=Tosh DFS TECH&apikey=<%= apikey %>">Music Card 2</a></li>
+<li><a href="/api/canva/montagem/bolsonaro?url=<%= fotoApi %>&apikey=<%= apikey %>">Bolsonaro</a></li>
+<li><a href="/api/canva/montagem/bolsonaro2?url=<%= fotoApi %>&apikey=<%= apikey %>">Bolsonaro 2</a></li>
+<li><a href="/api/canva/montagem/bolsonaro3?url=<%= fotoApi %>&apikey=<%= apikey %>">Bolsonaro 3</a></li>
+<li><a href="/api/canva/montagem/comunismo?url=<%= fotoApi %>&apikey=<%= apikey %>">Comunismo</a></li>
+<li><a href="/api/canva/montagem/lgbt?url=<%= fotoApi %>&apikey=<%= apikey %>">Lgbt</a></li>
+<li><a href="/api/canva/montagem/pepe?url=<%= fotoApi %>&apikey=<%= apikey %>">Pepe</a></li>
+<li><a href="/api/canva/montagem/romero?url=<%= fotoApi %>&apikey=<%= apikey %>">Romero</a></li>
+<li><a href="/api/canva/montagem/ednaldotv?url=<%= fotoApi %>&apikey=<%= apikey %>">Ednaldotv</a></li>
+<li><a href="/api/canva/montagem/mms?url=<%= fotoApi %>&apikey=<%= apikey %>">Mms</a></li>
+<li><a href="/api/canva/montagem/bobross?url=<%= fotoApi %>&apikey=<%= apikey %>">Bobross</a></li>
+<li><a href="/api/canva/montagem/facepalm?url=<%= fotoApi %>&apikey=<%= apikey %>">Facepalm</a></li>
+<li><a href="/api/canva/montagem/karaba?url=<%= fotoApi %>&apikey=<%= apikey %>">Karaba</a></li>
+<li><a href="/api/canva/montagem/rip?url=<%= fotoApi %>&apikey=<%= apikey %>">Rip</a></li>
+<li><a href="/api/canva/montagem/blur?url=<%= fotoApi %>&apikey=<%= apikey %>">Blur</a></li>
+<li><a href="/api/canva/montagem/circle?url=<%= fotoApi %>&apikey=<%= apikey %>">Circle</a></li>
+<li><a href="/api/canva/montagem/invert?url=<%= fotoApi %>&apikey=<%= apikey %>">Invert</a></li>
+<li><a href="/api/canva/montagem/pixelate?url=<%= fotoApi %>&apikey=<%= apikey %>">Pixelate</a></li>
+<li><a href="/api/canva/montagem/dither?url=<%= fotoApi %>&apikey=<%= apikey %>">dither</a></li>
+<li><a href="/api/canva/montagem/:nome?url=<%= fotoApi %>&apikey=<%= apikey %>">Montagem (template :nome)</a></li>
+</ul>
+</li>
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="mynaui:image"></iconify-icon>
+<span>Imagens</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+<ul class="sidebar-submenu">
+<li>
+<li><a href="/api/imagem/travaZapImg?apikey=<%= apikey %>">TravaZap img</a></li>
+<li><a href="/api/imagem/travaZapImg2?apikey=<%= apikey %>">TravaZapF img</a></li>
+<li><a href="/api/imagem/metadinha?apikey=<%= apikey %>">Metadinha</a></li>
+<li><a href="/api/imagem/metadinha2?apikey=<%= apikey %>">Metadinha2</a></li>
+<li><a href="/api/imagem/logo/logo?query=DFS TECH API&apikey=<%= apikey %>">Logo</a></li>
+<li><a href="/api/imagem/logo/logo2?query=DFS TECH API&apikey=<%= apikey %>">Logo2</a></li>
+<li><a href="/api/imagem/logo/logo3?query=DFS TECH API&apikey=<%= apikey %>">Logo3</a></li>
+<li><a href="/api/imagem/logo/logo4?query=DFS TECH API&apikey=<%= apikey %>">Logo4</a></li>
+<li><a href="/api/imagem/logo/logo5?query=DFS TECH API&apikey=<%= apikey %>">Logo5</a></li>
+<li><a href="/api/imagem/logo/:logoName?query=DFS TECH API&apikey=<%= apikey %>">Logo (template :logoName)</a></li>
+<li><a href="/api/imagem/logo6/text?texto=DFS TECH%20API&apikey=<%= apikey %>" target="_blank">Logo6</a></li>
+<li><a href="/api/imagem/logo7/text?texto=DFS TECH%20API&apikey=<%= apikey %>" target="_blank">Logo7</a></li>
+<li><a href="/api/imagem/logo8/text?texto=DFS TECH%20API&apikey=<%= apikey %>" target="_blank">Logo8</a></li>
+<li><a href="/api/imagem/logo9/text?texto=DFS TECH%20API&apikey=<%= apikey %>" target="_blank">Logo9</a></li>
+<li><a href="/api/imagem/logo10/text?texto=DFS TECH%20API&apikey=<%= apikey %>" target="_blank">Logo10</a></li>
+<li><a href="/api/imagem/logo11/text?texto=DFS TECH%20API&apikey=<%= apikey %>" target="_blank">Logo11</a></li>
+<li><a href="/api/imagem/animememe?apikey=<%= apikey %>" target="_blank">Anime Meme</a></li>
+</ul>
+</li>
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="mage:round-sticker"></iconify-icon>
+<span>Figurinhas</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+<ul class="sidebar-submenu">
+<li>
+<li><a href="/sticker/tema?nome=rei gelado&apikey=<%= apikey %>">Sticker nome</a></li>
+<li><a href="/sticker/figu_anime?apikey=<%= apikey %>"></i>Anime</a></li>
+<li><a href="/sticker/figu_coreana?apikey=<%= apikey %>"></i>Coreana</a></li>
+<li><a href="/sticker/figu_emoji?apikey=<%= apikey %>"></i>Emoji</a></li>
+<li><a href="/sticker/figu_bebe?apikey=<%= apikey %>"></i>Bebe</a></li>
+<li><a href="/sticker/figu_random?apikey=<%= apikey %>"></i>Random</a></li>
+<li><a href="/sticker/figu+18?apikey=<%= apikey %>"></i>+18</a></li>
+<li><a href="/sticker/figu_memes2?apikey=<%= apikey %>"></i>memes2</a></li>
+<li><a href="/sticker/figu_anime2?apikey=<%= apikey %>"></i>anime2</a></li>
+<li><a href="/sticker/figu_coreanas2?apikey=<%= apikey %>"></i>coreanas2</a></li>
+<li><a href="/sticker/figu_gatos?apikey=<%= apikey %>"></i>gatos</a></li>
+<li><a href="/sticker/figu_bts?apikey=<%= apikey %>"></i>BTS</a></li>
+<li><a href="/sticker/figu_desenho?apikey=<%= apikey %>"></i>Desenho</a></li>
+<li><a href="/sticker/figu_animais?apikey=<%= apikey %>"></i>Animais</a></li>
+<li><a href="/sticker/figu_raiva?apikey=<%= apikey %>"></i>Raiva</a></li>
+<li><a href="/sticker/figu_roblox?apikey=<%= apikey %>"></i>Roblox</a></li>
+<li><a href="/sticker/figu_aleatori?apikey=<%= apikey %>"></i>Aleatorias</a></li>
+<li><a href="/sticker/atp/1?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 1</a></li>
+<li><a href="/sticker/atp/2?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 2</a></li>
+<li><a href="/sticker/atp/3?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 3</a></li>
+<li><a href="/sticker/atp/4?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 4</a></li>
+<li><a href="/sticker/atp/5?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 5</a></li>
+<li><a href="/sticker/atp/6?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 6</a></li>
+<li><a href="/sticker/atp/7?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 7</a></li>
+<li><a href="/sticker/atp/8?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 8</a></li>
+<li><a href="/sticker/atp/9?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 9</a></li>
+<li><a href="/sticker/atp/10?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 10</a></li>
+<li><a href="/sticker/atp/11?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 11</a></li>
+<li><a href="/sticker/atp/12?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 12</a></li>
+<li><a href="/sticker/atp/13?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 13</a></li>
+<li><a href="/sticker/atp/14?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 14</a></li>
+<li><a href="/sticker/atp/15?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 15</a></li>
+<li><a href="/sticker/atp/16?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 16</a></li>
+<li><a href="/sticker/atp/17?texto=DFS TECH%20Api&apikey=<%= apikey %>">atp 17</a></li>
+<li><a href="/sticker/attp/1/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 1</a></li>
+<li><a href="/sticker/attp/2/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 2</a></li>
+<li><a href="/sticker/attp/3/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 3</a></li>
+<li><a href="/sticker/attp/4/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 4</a></li>
+<li><a href="/sticker/attp/5/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 5</a></li>
+<li><a href="/sticker/attp/6/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 6</a></li>
+<li><a href="/sticker/attp/7/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 7</a></li>
+<li><a href="/sticker/attp/8/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 8</a></li>
+<li><a href="/sticker/attp/9/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 9</a></li>
+<li><a href="/sticker/attp/10/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 10</a></li>
+<li><a href="/sticker/attp/11/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 11</a></li>
+<li><a href="/sticker/attp/12/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 12</a></li>
+<li><a href="/sticker/attp/13/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 13</a></li>
+<li><a href="/sticker/attp/14/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 14</a></li>
+<li><a href="/sticker/attp/15/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 15</a></li>
+<li><a href="/sticker/attp/16/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 16</a></li>
+<li><a href="/sticker/attp/17/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Attp 17</a></li>
+<li><a href="/sticker/brait/2/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 2</a></li>
+<li><a href="/sticker/brait/3/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 3</a></li>
+<li><a href="/sticker/brait/4/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 4</a></li>
+<li><a href="/sticker/brait/5/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 5</a></li>
+<li><a href="/sticker/brait/6/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 6</a></li>
+<li><a href="/sticker/brait/7/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 7</a></li>
+<li><a href="/sticker/brait/8/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 8</a></li>
+<li><a href="/sticker/brait/9/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 9</a></li>
+<li><a href="/sticker/brait/10/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 10</a></li>
+<li><a href="/sticker/brait/11/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 11</a></li>
+<li><a href="/sticker/brait/12/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 12</a></li>
+<li><a href="/sticker/brait/13/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 13</a></li>
+<li><a href="/sticker/brait/14/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 14</a></li>
+<li><a href="/sticker/brait/15/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 15</a></li>
+<li><a href="/sticker/brait/16/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 16</a></li>
+<li><a href="/sticker/brait/17/animado?texto=DFS TECH%20Api&apikey=<%= apikey %>">Brait 17</a></li>
+</ul>
+</li>
+<li class="">
+<a href="javascript:void(0)" class="navItem">
+<span class="flex items-center">
+<iconify-icon class=" nav-icon" icon="fluent:prohibited-multiple-16-regular"></iconify-icon>
+<span>Conteúdos +18</span>
+</span>
+<iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+</a>
+ <ul class="sidebar-submenu">
+<li><a href="/api/18/ass?apikey=<%= apikey %>">Ass</a></li>
+<li><a href="/api/18/azurlane?apikey=<%= apikey %>">Azurlane</a></li>
+<li><a href="/api/18/bdsm?apikey=<%= apikey %>">Bdsm</a></li>
+<li><a href="/api/18/blackclover?apikey=<%= apikey %>">Blackclover</a></li>
+<li><a href="/api/18/bleach?apikey=<%= apikey %>">Bleach</a></li>
+<li><a href="/api/18/cosplay?apikey=<%= apikey %>">Cosplay</a></li>
+<li><a href="/api/18/dbz?apikey=<%= apikey %>">dbz</a></li>
+<li><a href="/api/18/dragonmaid?apikey=<%= apikey %>">Dragonmaid</a></li>
+<li><a href="/api/18/futanari?apikey=<%= apikey %>">Futanari</a></li>
+<li><a href="/api/18/gordinha?apikey=<%= apikey %>">Gordinha</a></li>
+<li><a href="/api/18/hentai?apikey=<%= apikey %>">Hentai</a></li>
+<li><a href="/api/18/jujutsukaisen?apikey=<%= apikey %>">Jujutsukaisen</a></li>
+<li><a href="/api/18/konosuba?apikey=<%= apikey %>">konosuba</a></li>
+<li><a href="/api/18/lesbian?apikey=<%= apikey %>">Lesbian</a></li>
+<li><a href="/api/18/milf?apikey=<%= apikey %>">Milf</a></li>
+<li><a href="/api/18/monstergirls?apikey=<%= apikey %>">Monstergirls</a></li>
+<li><a href="/api/18/myheroacademy?apikey=<%= apikey %>">Myheroacademy</a></li>
+<li><a href="/api/18/naruto?apikey=<%= apikey %>">Naruto</a></li>
+<li><a href="/api/18/oniepiece?apikey=<%= apikey %>">Oniepiece</a></li>
+<li><a href="/api/18/overlord?apikey=<%= apikey %>">Overlord</a></li>
+<li><a href="/api/18/pokemon?apikey=<%= apikey %>">Pokemon</a></li>
+<li><a href="/api/18/rezero?apikey=<%= apikey %>">Rezero</a></li>
+<li><a href="/api/18/video/sex?apikey=<%= apikey %>">Pornovid</a></li>
+<li><a href="/api/18/video/sexv?apikey=<%= apikey %>">Pornovid2</a></li>
+<li><a href="/api/18/video/amador?apikey=<%= apikey %>">Amadorvid</a></li>
+<li><a href="/api/18/tentaculos?apikey=<%= apikey %>">Tentaculos</a></li>
+<li><a href="/api/18/wall?apikey=<%= apikey %>">Wall +18</a></li>
+<li><a href="/api/18/xvideos?nome=amador&apikey=<%= apikey %>">XVideos Busca</a></li>
+<li><a href="/api/18/plaquinha1?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha1</a></li>
+<li><a href="/api/18/plaquinha2?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha2</a></li>
+<li><a href="/api/18/plaquinha3?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha3</a></li>
+<li><a href="/api/18/plaquinha4?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha4</a></li>
+<li><a href="/api/18/plaquinha5?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha5</a></li>
+<li><a href="/api/18/plaquinha6?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha6</a></li>
+<li><a href="/api/18/plaquinha7?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha7</a></li>
+<li><a href="/api/18/plaquinha${plaq.id}?text=DFS TECH API&apikey=<%= apikey %>">Plaquinha (template dinâmico)</a></li>
+
+
+
+            </ul>
+          </li>
+          
+<li class="">
+  <a href="javascript:void(0)" class="navItem">
+    <span class="flex items-center">
+      <iconify-icon class="nav-icon" icon="fluent:video-person-star-off-24-regular"></iconify-icon>
+      <span>Edits Vídeo</span>
+    </span>
+    <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+  </a>
+  <ul class="sidebar-submenu">
+    <li><a href="/api/video/edts?apikey=<%= apikey %>">Edits Variados</a></li>
+    <li><a href="/api/video/editsjujutsu?apikey=<%= apikey %>">Edits Jujutsu</a></li>
+    <li><a href="/api/video/editsnaruto?apikey=<%= apikey %>">Edits Naruto</a></li>
+    <li><a href="/api/video/freefire?apikey=<%= apikey %>">Edits Free Fire</a></li>
+  </ul>
+</li>
+
+<li class="has-submenu">
+  <a href="javascript:void(0)" class="navItem">
+    <span class="flex items-center">
+      <iconify-icon class="nav-icon" icon="mdi:database-search"></iconify-icon>
+      <span>Consultas</span>
+    </span>
+    <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+  </a>
+  <ul class="sidebar-submenu">
+    <li><a href="#painel-puxadas">Painel de Consultas</a></li>
+    <li><a href="/api/puxadas/health">Consultas Health</a></li>
+    <li><a href="/api/puxadas/consulta">Tipos de Consultas</a></li>
+    <li><a href="/api/puxadas/*?apikey=<%= apikey %>">Consultas wildcard (template *)</a></li>
+    <li><a href="/api/puxadas/account?apikey=<%= apikey %>">Conta da API Key</a></li>
+    <li><a href="/api/puxadas/consulta/:tipo?cpf=11396397736&apikey=<%= apikey %>">Consulta template :tipo</a></li>
+    <li><a href="/api/puxadas/consulta/:compact?apikey=<%= apikey %>">Consulta template :compact</a></li>
+    <li><a href="/api/puxadas/consulta/${tipo}?apikey=<%= apikey %>">Consulta template dinâmico ${tipo}</a></li>
+    <li><a href="/api/puxadas/consulta/cpf=11396397736&apikey=<%= apikey %>">Consulta Compacta (path)</a></li>
+    <li><a href="/api/puxadas/consulta/cpf?cpf=11396397736&apikey=<%= apikey %>">Consulta CPF (Base URL)</a></li>
+    <li><a href="/api/puxadas/consulta/cnpj?cnpj=19131243000197&apikey=<%= apikey %>">Consulta CNPJ (Base URL)</a></li>
+    <li><a href="/api/puxadas/consulta/telefone?telefone=11999999999&apikey=<%= apikey %>">Consulta Telefone (Base URL)</a></li>
+    <li><a href="/api/puxadas/consulta/placa?placa=ABC1234&apikey=<%= apikey %>">Consulta Placa (Base URL)</a></li>
+    <li><a href="/api/dados-pessoais/cpf?cpf=11396397736&apikey=<%= apikey %>">Dados Pessoais CPF</a></li>
+    <li><a href="/api/dados-pessoais/cnh?cnh=11396397736&apikey=<%= apikey %>">Dados Pessoais CNH</a></li>
+    <li><a href="/api/dados-pessoais/nome?nome=MARIA%20SILVA&apikey=<%= apikey %>">Dados Pessoais Nome</a></li>
+    <li><a href="/api/dados-pessoais/rg?rg=123456789&apikey=<%= apikey %>">Dados Pessoais RG</a></li>
+    <li><a href="/api/dados-pessoais/bin2?bin2=498408&apikey=<%= apikey %>">Dados Pessoais BIN2</a></li>
+    <li><a href="/api/consulta/cep/89010025?apikey=<%= apikey %>">Consulta CEP</a></li>
+    <li><a href="/api/consulta/cep/:cep?apikey=<%= apikey %>">Consulta CEP (template :cep)</a></li>
+    <li><a href="/api/consulta/ddd/97?apikey=<%= apikey %>">Consulta DDD</a></li>
+    <li><a href="/api/consulta/ddd/:ddd?apikey=<%= apikey %>">Consulta DDD (template :ddd)</a></li>
+    <li><a href="/api/consulta/clima/aeroporto/SBAR?apikey=<%= apikey %>">Consulta Clima</a></li>
+    <li><a href="/api/consulta/clima/aeroporto/:codigoICAO?apikey=<%= apikey %>">Consulta Clima (template :codigoICAO)</a></li>
+    <li><a href="/api/dados-pessoais?apikey=<%= apikey %>">Dados Pessoais Random</a></li>
+    <li><a href="/api/dados-pessoais/${consulta}?apikey=<%= apikey %>">Dados Pessoais (template dinâmico)</a></li>
+    <li><a href="/api/gerar-cpf?apikey=<%= apikey %>">Gerar CPF</a></li>
+  </ul>
+</li>
+</li>
+
+<li class="has-submenu">
+  <a href="javascript:void(0)" class="navItem">
+    <span class="flex items-center">
+      <iconify-icon class="nav-icon" icon="mdi:robot"></iconify-icon>
+      <span>Bots & Bases</span>
+    </span>
+    <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+  </a>
+  <ul class="sidebar-submenu">
+    <li>
+      <a href="https://mega.nz/file/mtYF1DKC#C0eWixN7QKYFv3bxLe4FN80xJUCtymtYrP9kIiIaWHw" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:discord" class="text-indigo-500"></iconify-icon>
+        <span>Bot Discord</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://mega.nz/file/AyIV2SYS#fdbyguxFiS1OuKpECn7UQXhaVS-AvHru0FSL_nZJjfQ" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:whatsapp" class="text-green-500"></iconify-icon>
+        <span>Bot WhatsApp</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://mega.nz/file/6sgTCKpY#1MpcC0Fgq6_BdfDRMGwQIMRMpWFU3XGZICuU5kowYLM" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:telegram" class="text-sky-400"></iconify-icon>
+        <span>Bot Telegram</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://mega.nz/file/eN83iDTQ#ZLZVh9bvKX-I-f8T2_Q0KFYFl3cw9j4ZNjRyqIq_RAg" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:database" class="text-yellow-500"></iconify-icon>
+        <span>Packs de Cases</span>
+      </a>
+    </li>
+    <li>
+      <a href="/api/billing/plans" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:cash-multiple" class="text-yellow-400"></iconify-icon>
+        <span>Billing Planos</span>
+      </a>
+    </li>
+    <li>
+      <a href="/api/billing/checkout?apikey=<%= apikey %>&plan=starter_10" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:credit-card-outline" class="text-cyan-400"></iconify-icon>
+        <span>Billing Checkout</span>
+      </a>
+    </li>
+    <li>
+      <a href="/api/billing/webhook" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:webhook" class="text-emerald-400"></iconify-icon>
+        <span>Billing Webhook</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- ========== INFORMAÇÕES DE USUÁRIO ========== -->
+<li class="has-submenu">
+  <a href="javascript:void(0)" class="navItem">
+    <span class="flex items-center">
+      <iconify-icon class="nav-icon" icon="mdi:account-circle-outline"></iconify-icon>
+      <span>Informações de Usuário</span>
+    </span>
+    <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+  </a>
+  <ul class="sidebar-submenu">
+    <li>
+      <a href="/api/userinfo?apikey=<%= apikey %>" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:account" class="text-#FF2A1F-500"></iconify-icon>
+        <span>Info de Usuário</span>
+      </a>
+    </li>
+    <li>
+      <a href="/api/auth/me?apikey=<%= apikey %>" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:account-check-outline" class="text-emerald-400"></iconify-icon>
+        <span>Auth Me</span>
+      </a>
+    </li>
+    <li>
+      <a href="/api/users" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:database-outline" class="text-yellow-400"></iconify-icon>
+        <span>Lista Users (JSON)</span>
+      </a>
+    </li>
+    <li>
+      <a href="/api/deletimg?idImg=arquivo.ext&apikey=ADMIN_KEY" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:trash-can-outline" class="text-red-400"></iconify-icon>
+        <span>Delete Upload (Admin)</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://youtu.be/I4aaI3M9NA4?si=bwYi5Quf354uSzss" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:server-network" class="text-emerald-500"></iconify-icon>
+        <span>Canal do YouTube</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- ========== REDES SOCIAIS ========== -->
+<li class="has-submenu">
+  <a href="javascript:void(0)" class="navItem">
+    <span class="flex items-center">
+      <iconify-icon class="nav-icon" icon="mdi:earth"></iconify-icon>
+      <span>Redes Sociais</span>
+    </span>
+    <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
+  </a>
+  <ul class="sidebar-submenu">
+    <li>
+      <a href="https://t.me/5511961527811" target="_blank" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:telegram" class="text-sky-400"></iconify-icon>
+        <span>Telegram</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/RickyThejhocker36?mibextid=ZbWKwL" target="_blank" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:facebook" class="text-#FF2A1F-600"></iconify-icon>
+        <span>Facebook</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/toshblackout" target="_blank" class="flex items-center gap-2">
+        <iconify-icon icon="mdi:github" class="text-gray-800 dark:text-white"></iconify-icon>
+        <span>GitHub</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+          <!---fim-->
+        </ul>
+        <!-- Upgrade Your Business Plan Card Start -->
+        <div class="bg-slate-900 mb-10 mt-24 p-4 relative text-center rounded-2xl text-white" id="sidebar_bottom_wizard">
+          <img style="width: 100px; height: 100px;" src="assets/images/svg/diamante.png" alt="" class="mx-auto relative -mt-[73px]">
+          <div class="max-w-[160px] mx-auto mt-6">
+            <div class="widget-title font-Inter mb-1">Assinar Plano</div>
+            <div class="text-xs font-light font-Inter">
+              Escolha seu plano e desenvolva seu projeto 
+            </div>
+          </div>
+          <div class="mt-6">
+            <a href="planos"><button class="bg-white hover:bg-opacity-80 text-slate-900 text-sm font-Inter rounded-md w-full block py-2 font-medium">
+              Assinar
+            </button></a>
+          </div>
+        </div>
+        <br><br><br>
+        <!-- Upgrade Your Business Plan Card Start -->
+      </div>
+    </div>
+    <!-- End: Sidebar -->
+    <!-- End: Sidebar -->
+    <!-- BEGIN: Settings -->
+
+
+
+    <!-- End: Settings -->
+    <div class="flex flex-col justify-between min-h-screen">
+      <div>
+        <!-- BEGIN: Header -->
+        <!-- BEGIN: Header -->
+        <div class="z-[9]" id="app_header">
+          <div class="app-header z-[999] ltr:ml-[248px] rtl:mr-[248px] bg-white dark:bg-slate-800 shadow-sm dark:shadow-slate-700">
+            <div class="flex justify-between items-center h-full">
+              <div class="flex items-center md:space-x-4 space-x-2 xl:space-x-0 rtl:space-x-reverse vertical-box">
+                <a href="#" class="mobile-logo xl:hidden inline-block">
+             
+                </a>
+                <button class="smallDeviceMenuController hidden md:inline-block xl:hidden">
+                  <iconify-icon class="leading-none bg-transparent relative text-xl top-[2px] text-slate-900 dark:text-white" icon="heroicons-outline:menu-alt-3"></iconify-icon>
+                </button>
+                <button class="flex items-center xl:text-sm text-lg xl:text-slate-400 text-slate-800 dark:text-slate-300 px-1
+        rtl:space-x-reverse search-modal" data-bs-toggle="modal" data-bs-target="#searchModal">
+                  <iconify-icon icon="heroicons-outline:search"></iconify-icon>
+                  <span class="xl:inline-block hidden ml-3">Search...
+    </span>
+                </button>
+                <button id="musicToggleBtn" type="button" class="flex items-center xl:text-sm text-lg xl:text-slate-400 text-slate-800 dark:text-slate-300 px-1">
+                  <iconify-icon id="musicToggleIcon" icon="heroicons-outline:pause"></iconify-icon>
+                  <span id="musicToggleText" class="xl:inline-block hidden ml-3">PAUSAR MÚSICA</span>
+                </button>
+
+              </div>
+              <!-- end vertcial -->
+              <div class="items-center space-x-4 rtl:space-x-reverse horizental-box">
+                <a href="#">
+                  <span class="xl:inline-block hidden">
+     
+    </span>
+                  <span class="xl:hidden inline-block">
+        <img src="<%= fotoApi %>" class="black_logo " alt="logo">
+        <img src="<%= fotoApi %>" class="white_logo " alt="logo">
+    </span>
+                </a>
+                <button class="smallDeviceMenuController  open-sdiebar-controller xl:hidden inline-block">
+                  <iconify-icon class="leading-none bg-transparent relative text-xl top-[2px] text-slate-900 dark:text-white" icon="heroicons-outline:menu-alt-3"></iconify-icon>
+                </button>
+
+              </div>
+              <!-- end horizental -->
+
+
+
+              <div class="main-menu">
+                <ul>
+
+                  <li class="
+             menu-item-has-children 
+              ">
+                    <!--  Single menu -->
+
+                    <!-- has dropdown -->
+
+
+
+                    <a href="javascript:void()">
+                      <div class="flex flex-1 items-center space-x-[6px] rtl:space-x-reverse">
+                        <span class="icon-box">
+                    <iconify-icon icon=heroicons-outline:home > </iconify-icon>
+                  </span>
+                        <div class="text-box">Dashboard</div>
+                      </div>
+                      <div class="flex-none text-sm ltr:ml-3 rtl:mr-3 leading-[1] relative top-1">
+                        <iconify-icon icon="heroicons-outline:chevron-down"> </iconify-icon>
+                      </div>
+                    </a>
+
+                    <!-- Dropdown menu -->
+
+
+
+                    <ul class="sub-menu">
+
+
+
+                      <li>
+                        <a href=index.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons:presentation-chart-line class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Analytics Dashboard
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=ecommerce-dashboard.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons:shopping-cart class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Ecommerce Dashboard
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=project-dashboard.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons:briefcase class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Project Dashboard
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=crm-dashboard.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=ri:customer-service-2-fill class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          CRM Dashboard
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=banking-dashboard.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons:wrench-screwdriver class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Banking Dashboard
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+                    </ul>
+
+                    <!-- Megamenu -->
+
+
+                  </li>
+
+                  <li class="
+             menu-item-has-children 
+              ">
+                    <!--  Single menu -->
+
+                    <!-- has dropdown -->
+
+
+
+                    <a href="javascript:void()">
+                      <div class="flex flex-1 items-center space-x-[6px] rtl:space-x-reverse">
+                        <span class="icon-box">
+                    <iconify-icon icon=heroicons-outline:chip > </iconify-icon>
+                  </span>
+                        <div class="text-box">App</div>
+                      </div>
+                      <div class="flex-none text-sm ltr:ml-3 rtl:mr-3 leading-[1] relative top-1">
+                        <iconify-icon icon="heroicons-outline:chevron-down"> </iconify-icon>
+                      </div>
+                    </a>
+
+                    <!-- Dropdown menu -->
+
+
+
+                    <ul class="sub-menu">
+
+
+
+                      <li>
+                        <a href=chat.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:chat class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Chat
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=email.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:mail class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Email
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=calender>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:calendar class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Calendar
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=kanban>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:view-boards class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Kanban
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=todo>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:clipboard-check class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Todo
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=projects>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:document class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Projects
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+                    </ul>
+
+                    <!-- Megamenu -->
+
+
+                  </li>
+
+                  <li class="
+              menu-item-has-children has-megamenu
+            ">
+                    <!--  Single menu -->
+
+                    <!-- has dropdown -->
+
+
+
+                    <a href="javascript:void()">
+                      <div class="flex flex-1 items-center space-x-[6px] rtl:space-x-reverse">
+                        <span class="icon-box">
+                    <iconify-icon icon=heroicons-outline:view-boards > </iconify-icon>
+                  </span>
+                        <div class="text-box">Pages</div>
+                      </div>
+                      <div class="flex-none text-sm ltr:ml-3 rtl:mr-3 leading-[1] relative top-1">
+                        <iconify-icon icon="heroicons-outline:chevron-down"> </iconify-icon>
+                      </div>
+                    </a>
+
+                    <!-- Dropdown menu -->
+
+
+                    <!-- Megamenu -->
+
+
+
+                    <div class="rt-mega-menu">
+                      <div class="flex flex-wrap space-x-8 justify-between rtl:space-x-reverse">
+
+
+
+                        <div>
+                          <!-- mega menu title -->
+                          <div class="text-sm font-medium text-slate-900 dark:text-white mb-2 flex space-x-1 items-center">
+
+                            <span> Authentication</span>
+                          </div>
+                          <!-- single menu item* -->
+
+
+
+                          <a href=signin-one.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Signin One
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=signin-two.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Signin Two
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=signin-three.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Signin Three
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=signup-one.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Signup One
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=signup-two.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Signup Two
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=signup-three.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Signup Three
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=forget-password-one.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Forget Password One
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=forget-password-two.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Forget Password Two
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=forget-password-three.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Forget Password Three
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=lock-screen-one.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Lock Screen One
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=lock-screen-two.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Lock Screen Two
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=lock-screen-three.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Lock Screen Three
+                              </span>
+                            </div>
+
+                          </a>
+
+                        </div>
+
+
+
+                        <div>
+                          <!-- mega menu title -->
+                          <div class="text-sm font-medium text-slate-900 dark:text-white mb-2 flex space-x-1 items-center">
+
+                            <span> Components</span>
+                          </div>
+                          <!-- single menu item* -->
+
+
+
+                          <a href=typography.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                typography
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=colors.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                colors
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=alert.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                alert
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=button.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                button
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=card.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                card
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=carousel.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                carousel
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=dropdown.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                dropdown
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=image.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                image
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=modal.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                modal
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=progress-bar.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Progress bar
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=placeholder.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Placeholder
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=tab-accordion.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Tab &amp; Accordion
+                              </span>
+                            </div>
+
+                          </a>
+
+                        </div>
+
+
+
+                        <div>
+                          <!-- mega menu title -->
+                          <div class="text-sm font-medium text-slate-900 dark:text-white mb-2 flex space-x-1 items-center">
+
+                            <span> Forms</span>
+                          </div>
+                          <!-- single menu item* -->
+
+
+
+                          <a href=input.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Input
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=input-group.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Input group
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=input-layout.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Input layout
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=form-validation.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Form validation
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=form-wizard.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Wizard
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=input-mask.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Input mask
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=file-input>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                File input
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=form-repeater.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Form repeater
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=textarea.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Textarea
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=checkbox.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Checkbox
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=radio-button.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Radio button
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=switch.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Switch
+                              </span>
+                            </div>
+
+                          </a>
+
+                        </div>
+
+
+
+                        <div>
+                          <!-- mega menu title -->
+                          <div class="text-sm font-medium text-slate-900 dark:text-white mb-2 flex space-x-1 items-center">
+
+                            <span> Utility</span>
+                          </div>
+                          <!-- single menu item* -->
+
+
+
+                          <a href=invoice.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Invoice
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=pricing.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Pricing
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=faq.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                FAQ
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=blank-page.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Blank page
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=blog.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Blog
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=404.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                404 page
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=comming-soon.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Coming Soon
+                              </span>
+                            </div>
+
+                          </a>
+
+
+
+                          <a href=under-maintanance.html>
+
+                            <div class="flex items-center space-x-2 text-[15px] leading-6 rtl:space-x-reverse">
+                              <span
+                                class="h-[6px] w-[6px] rounded-full border border-slate-600 dark:border-white inline-block flex-none"
+                              ></span>
+                              <span
+                                class="capitalize text-slate-600 dark:text-slate-300"
+                              >
+                                Under Maintanance page
+                              </span>
+                            </div>
+
+                          </a>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </li>
+
+                  <li class="
+             menu-item-has-children 
+              ">
+                    <!--  Single menu -->
+
+                    <!-- has dropdown -->
+
+
+
+                    <a href="javascript:void()">
+                      <div class="flex flex-1 items-center space-x-[6px] rtl:space-x-reverse">
+                        <span class="icon-box">
+                    <iconify-icon icon=heroicons-outline:view-grid-add > </iconify-icon>
+                  </span>
+                        <div class="text-box">Widgets</div>
+                      </div>
+                      <div class="flex-none text-sm ltr:ml-3 rtl:mr-3 leading-[1] relative top-1">
+                        <iconify-icon icon="heroicons-outline:chevron-down"> </iconify-icon>
+                      </div>
+                    </a>
+
+                    <!-- Dropdown menu -->
+
+
+
+                    <ul class="sub-menu">
+
+
+
+                      <li>
+                        <a href=basic-widgets.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:document-text class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Basic
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=statistics-widgets.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:document-text class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Statistic
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+                    </ul>
+
+                    <!-- Megamenu -->
+
+
+                  </li>
+
+                  <li class="
+             menu-item-has-children 
+              ">
+                    <!--  Single menu -->
+
+                    <!-- has dropdown -->
+
+
+
+                    <a href="javascript:void()">
+                      <div class="flex flex-1 items-center space-x-[6px] rtl:space-x-reverse">
+                        <span class="icon-box">
+                    <iconify-icon icon=heroicons-outline:template > </iconify-icon>
+                  </span>
+                        <div class="text-box">Extra</div>
+                      </div>
+                      <div class="flex-none text-sm ltr:ml-3 rtl:mr-3 leading-[1] relative top-1">
+                        <iconify-icon icon="heroicons-outline:chevron-down"> </iconify-icon>
+                      </div>
+                    </a>
+
+                    <!-- Dropdown menu -->
+
+
+
+                    <ul class="sub-menu">
+
+
+
+                      <li>
+                        <a href=basic-table.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:table class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Basic Table
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=advance-table.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:table class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Advanced table
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=apex-chart.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:chart-bar class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Apex chart
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=chartjs.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:chart-bar class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Chart js
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+                      <li>
+                        <a href=map.html>
+                          <div class="flex space-x-2 items-start rtl:space-x-reverse">
+                            <iconify-icon icon=heroicons-outline:map class="leading-[1] text-base"> </iconify-icon>
+                            <span class="leading-[1]">
+                          Map
+                        </span>
+                          </div>
+                        </a>
+                      </li>
+
+                    </ul>
+
+                    <!-- Megamenu -->
+
+
+                  </li>
+
+                </ul>
+              </div>
+              <!-- end top menu -->
+              <div class="nav-tools flex items-center lg:space-x-5 space-x-3 rtl:space-x-reverse leading-0">
+
+                <!-- BEGIN: Language Dropdown  -->
+
+                <div class="relative">
+             
+                <!-- END: TOggle Theme -->
+                
+                <!-- BEGIN: Profile Dropdown -->
+                <!-- Profile DropDown Area -->
+                <div class="md:block hidden w-full">
+                  <button class="text-slate-800 dark:text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center
+      inline-flex items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="lg:h-8 lg:w-8 h-7 w-7 rounded-full flex-1 ltr:mr-[10px] rtl:ml-[10px]">
+                      <img src="<%= fotoApi %>" alt="user" class="block w-full h-full object-cover rounded-full">
+                    </div>
+                    <span class="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap"><%= username %></span>
+                    <svg class="w-[16px] h-[16px] dark:text-white hidden lg:inline-block text-base inline-block ml-[10px] rtl:mr-[10px]" aria-hidden="true" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </button>
+                  <!-- Dropdown menu -->
+                  <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md
+      overflow-hidden">
+                    <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
+                      <li>
+                        <a href="Wa.me/5511961527811" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+            dark:text-white font-normal">
+                          <iconify-icon icon="heroicons-outline:chat" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                          <span class="font-Inter">Suporte</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="Wa.me/5511961527811" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+            dark:text-white font-normal">
+                          <iconify-icon icon="heroicons-outline:credit-card" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                          <span class="font-Inter">Preços</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+            dark:text-white font-normal">
+                          <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                          <span class="font-Inter">Sair</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- END: Header -->
+        <div class="nav-tools flex items-center space-x-4 z-10 relative">
+  <!-- Ícone do menu lateral -->
+  <button class="smallDeviceMenuController flex items-center justify-center">
+    <iconify-icon class="text-white text-2xl" icon="heroicons-outline:menu-alt-3"></iconify-icon>
+  </button>
+
+  <!-- Ícone de pintura / tema -->
+  <button id="grayScale" class="text-white text-2xl flex items-center justify-center">
+    <iconify-icon icon="mdi:paint-outline"></iconify-icon>
+  </button>
+
+   <!-- Ícone de jogos -->
+<a href="/jogos" class="flex items-center justify-center">
+  <iconify-icon class="text-white text-2xl" icon="mdi:gamepad-variant-outline"></iconify-icon>
+</a>
+
+   <!-- Ícone de VIPs -->
+<a href="/vip" class="flex items-center justify-center">
+  <iconify-icon class="text-yellow-400 text-2xl" icon="mdi:crown-outline"></iconify-icon>
+</a>
+
+<!-- Ícone da assistente IA -->
+<a href="/chat" class="flex items-center justify-center">
+  <iconify-icon class="text-white text-2xl" icon="mdi:robot-outline"></iconify-icon>
+</a>
+
+<!-- Ícone painel puxadas -->
+<a href="#painel-puxadas" class="flex items-center justify-center">
+  <iconify-icon class="text-red-300 text-2xl" icon="mdi:database-search-outline"></iconify-icon>
+</a>
+</div>
+
+                <!-- end mobile menu -->
+              </div>
+              <!-- end nav tools -->
+            </div>
+          </div>
+        </div>
+
+        <!-- BEGIN: Search Modal -->
+        <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+          <div class="modal-dialog relative w-auto pointer-events-none top-1/4">
+            <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white dark:bg-slate-900 bg-clip-padding rounded-md outline-none text-current">
+              <form>
+                <div class="relative">
+                  <input type="text" class="form-control !py-3 !pr-12" placeholder="Search">
+                  <button class="absolute right-0 top-1/2 -translate-y-1/2 w-9 h-full border-l text-xl border-l-slate-200 dark:border-l-slate-600 dark:text-slate-300 flex items-center justify-center">
+                    <iconify-icon icon="heroicons-solid:search"></iconify-icon>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- END: Search Modal -->
+        <!-- END: Header -->
+        <!-- END: Header -->
+        <div class="content-wrapper transition-all duration-150 ltr:ml-[248px] rtl:mr-[248px]" id="content_wrapper">
+          <div class="page-content">
+            <div class="transition-all duration-150 container-fluid" id="page_layout">
+              <div id="content_layout">
+
+                <div>
+                  <div class="flex justify-between flex-wrap items-center mb-6">
+                    <h4 class="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4 mb-4 sm:mb-0 flex space-x-3 rtl:space-x-reverse">DFS TECH</h4>
+                    <div class="flex sm:space-x-4 space-x-2 sm:justify-end items-center rtl:space-x-reverse">
+ 
+                    </div>
+                  </div>
+                  
+                  <!---<div class="grid grid-cols-12 gap-5 mb-5">
+                    <div class="2xl:col-span-3 lg:col-span-4 col-span-12">
+                      <div class="bg-no-repeat bg-cover bg-center p-4 rounded-[6px] relative" style="background-image: url(assets/images/all-img/widget-bg-1.png)">
+                        <div class="max-w-[180px]">
+                          <div class="text-xl font-medium text-slate-900 mb-2">
+                            Upgrade your Dashcode
+                          </div>
+                          <p class="text-sm text-slate-800">
+                            Pro plan for better results
+                          </p>
+                        </div>
+                        <div class="absolute top-1/2 -translate-y-1/2 ltr:right-6 rtl:left-6 mt-2 h-12 w-12 bg-white rounded-full text-xs font-medium
+                            flex flex-col items-center justify-center">
+                          Now
+                        </div>
+                      </div>
+                    </div>---->
+                    
+                    <div class="2xl:col-span-9 lg:col-span-8 col-span-12">
+                      <div class="p-4 card">
+                        <div class="grid md:grid-cols-3 col-span-1 gap-4">
+
+<!-- BEGIN: Group Chart2 -->
+
+<div class="py-[18px] px-4 rounded-[10px] border border-black border-opacity-50 backdrop-blur-md bg-[#00000030]">
+<div class="flex items-center space-x-6 rtl:space-x-reverse">
+<div class="flex-none">
+<span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+text-slate-900">
+<iconify-icon icon="catppuccin:folder-admin-open"></iconify-icon>
+</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 dark:text-slate-300 text-sm mb-1 font-medium">
+ 
+</div>
+<div class="text-slate-900 dark:text-white text-lg font-medium">
+<% if (adm) { %>
+Administrador
+<% } else { %>
+Membro 
+<% } %>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="borda-transparente">
+  <div class="flex items-center space-x-6 rtl:space-x-reverse">
+<div class="flex-none">
+<span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+          text-slate-900">
+<iconify-icon icon="heroicons-outline:cash"></iconify-icon>
+</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 dark:text-slate-300 text-sm mb-1 font-medium">
+Total de request
+</div>
+<div class="text-slate-900 dark:text-white text-lg font-medium">
+<% if (ilimitado) { %>
+Ilimitado
+<% } else { %>
+<%= request %>
+<% } %>
+</div>
+</div>
+</div>
+</div>
+
+<div class="borda-transparente">
+  <div class="flex items-center space-x-6 rtl:space-x-reverse">
+<div class="flex-none">
+ <span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+          text-slate-900">
+<iconify-icon icon="heroicons-outline:key"></iconify-icon>
+</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 dark:text-slate-300 text-sm mb-1 font-medium">
+ApiKey 
+</div>
+<div class="text-slate-900 dark:text-white text-lg font-medium">
+<%= apikey %>
+</div>
+</div>
+</div>
+</div>
+
+<div class="borda-transparente">
+<div class="flex items-center space-x-6 rtl:space-x-reverse">
+<div class="flex-none">
+ <span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+          text-slate-900">
+<iconify-icon icon="heroicons-outline:key"></iconify-icon>
+</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 dark:text-slate-300 text-sm mb-1 font-medium">
+Senha
+</div>
+<div class="text-slate-900 dark:text-white text-lg font-medium">
+<%= senha %>
+</div>
+</div>
+</div>
+</div>
+
+<div class="borda-transparente">
+<div class="flex items-center space-x-6 rtl:space-x-reverse">
+<div class="flex-none">
+<span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+          text-slate-900">
+<iconify-icon icon="mdi:package-variant-closed"></iconify-icon>
+</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 dark:text-slate-300 text-sm mb-1 font-medium">
+Upload/Arquivos
+</div>
+<div class="text-slate-900 dark:text-white text-lg font-medium">
+<li>
+<a href="/upload",class="">
+Uploads</a>
+</li>
+</div>
+</div>
+</div>
+</div>
+
+<div class="borda-transparente">
+  <div class="flex items-center space-x-6 rtl:space-x-reverse">
+<div class="flex-none">
+<span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+          text-slate-900">
+<iconify-icon icon="ic:baseline-whatsapp"></iconify-icon>
+</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 dark:text-slate-300 text-sm mb-1 font-medium">
+CANAL DO WHATSAPP 
+</div>
+<div class="text-slate-900 dark:text-white text-lg font-medium">
+<li>
+<a href="https://whatsapp.com/channel/0029VbCVL8VGE56jkabX0m0L" class="">
+CANAL DFS TECH</a>
+</li>
+</div>
+</div>
+</div>
+</div>
+
+  
+
+<br><center><h3>RANK 10 API </h3></center>
+
+<%
+topUsers
+.sort((a, b) => (b.level || 0) - (a.level || 0))
+.slice(0, 10)
+.forEach(function(user) {
+%>
+
+<div class="borda-transparente">
+<div class="flex items-center space-x-6 rtl:space-x-reverse">
+    
+    <div class="flex-none">
+      <span class="relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white text-slate-900">
+        <img 
+          style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #B00000;" 
+          src="<%= user.foto %>" 
+          alt="<%= user.nick || user.username %>">
+      </span>
+    </div>
+
+    <div class="flex-1">
+      <div class="text-slate-800 dark:text-slate-300 text-sm mb-1 font-medium">
+        <% if (user.adm) { %>
+          <span style="color: #FF2A1F;">Administrador</span><br>
+          Level: <%= user.level %>
+        <% } else { %>
+          <span style="color: gray;">Membro</span><br>
+          Level: <%= user.level %>
+        <% } %>
+      </div>
+
+      <div class="text-slate-900 dark:text-white text-lg font-medium">
+        <%= user.nick || user.username %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<% }); %>
+
+<div id="painel-puxadas" class="borda-transparente" style="margin-top: 18px;">
+  <div class="flex items-center space-x-2 rtl:space-x-reverse" style="margin-bottom: 12px;">
+    <iconify-icon icon="mdi:database-search" class="text-red-300 text-2xl"></iconify-icon>
+    <h3 class="text-slate-900 dark:text-white text-lg font-semibold">Painel Unificado da API</h3>
+  </div>
+
+  <p class="text-slate-700 dark:text-slate-300 text-sm" style="margin-bottom: 12px;">
+    Use as rotas da API direto pelo site, com sua sessão logada e API Key da conta.
+  </p>
+
+  <div class="grid md:grid-cols-2 col-span-1 gap-4" style="margin-bottom: 12px;">
+    <div>
+      <label class="block text-sm mb-1">Categoria</label>
+      <select id="painelCategoria" class="form-control !bg-slate-900 !text-white !border-slate-700">
+        <option value="puxadas">Consultas</option>
+        <option value="dadosPessoais">Dados Pessoais</option>
+        <option value="utilitarios">Utilitários</option>
+        <option value="download">Download</option>
+        <option value="pesquisas">Pesquisas</option>
+        <option value="ia">Inteligência Artificial</option>
+        <option value="canva">Canvas</option>
+        <option value="imagens">Imagens</option>
+        <option value="figurinhas">Figurinhas</option>
+        <option value="adulto">Conteúdos +18</option>
+        <option value="edits">Edits Vídeo</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Rota</label>
+      <select id="painelRota" class="form-control !bg-slate-900 !text-white !border-slate-700"></select>
+    </div>
+  </div>
+
+  <div id="painelParametros" class="grid md:grid-cols-2 col-span-1 gap-4" style="margin-bottom: 12px;"></div>
+
+  <div class="flex items-center gap-2" style="margin-bottom: 12px;">
+    <button id="painelConsultar" type="button" class="btn btn-primary">Consultar</button>
+    <button id="painelLimpar" type="button" class="btn">Limpar</button>
+  </div>
+
+  <div style="margin-bottom: 8px;">
+    <button id="painelCopiar" type="button" class="btn btn-primary">COPIAR</button>
+  </div>
+  <div id="painelMidia" class="p-3 rounded bg-slate-950 text-emerald-300 text-xs overflow-auto" style="display:none; margin-bottom: 8px;"></div>
+  <pre id="painelResultado" class="p-3 rounded bg-slate-950 text-emerald-300 text-xs overflow-auto" style="min-height: 200px;"></pre>
+</div>
+
+<script>
+(() => {
+  const painelApiKey = <%- JSON.stringify(apikey) %>;
+
+  const fieldsByTipo = {
+    cpf: [{ key: "cpf", label: "CPF" }],
+    cpf2: [{ key: "cpf", label: "CPF" }],
+    cpf3: [{ key: "cpf", label: "CPF" }],
+    cpf4: [{ key: "cpf", label: "CPF" }],
+    cpf5: [{ key: "cpf", label: "CPF" }],
+    srs: [{ key: "cpf", label: "CPF (SRS)" }],
+    score: [{ key: "cpf", label: "CPF (Score)" }],
+    score2: [{ key: "cpf", label: "CPF (Score2)" }],
+    nacional: [{ key: "estado", label: "Estado (UF)" }, { key: "cpf", label: "CPF" }],
+    cnh: [{ key: "cpf", label: "CPF/CNH" }],
+    fotorj: [{ key: "cpf", label: "CPF (FotoRJ)" }],
+    rg: [{ key: "rg", label: "RG" }],
+    rg2: [{ key: "rg", label: "RG" }],
+    telefone: [{ key: "telefone", label: "Telefone" }],
+    telefone2: [{ key: "telefone", label: "Telefone" }],
+    telefone3: [{ key: "telefone", label: "Telefone" }],
+    tel: [{ key: "tel", label: "Telefone (tel)" }],
+    tel2: [{ key: "tel", label: "Telefone (tel2)" }],
+    phone: [{ key: "phone", label: "Phone" }],
+    phone2: [{ key: "phone", label: "Phone2" }],
+    placa: [{ key: "placa", label: "Placa" }],
+    placa2: [{ key: "placa", label: "Placa" }],
+    placa3: [{ key: "placa", label: "Placa" }],
+    placa4: [{ key: "placa", label: "Placa" }],
+    cnpj: [{ key: "cnpj", label: "CNPJ" }],
+    cnpj2: [{ key: "cnpj", label: "CNPJ" }],
+    nome: [{ key: "nome", label: "Nome" }],
+    nome2: [{ key: "nome", label: "Nome" }],
+    email: [{ key: "email", label: "E-mail" }],
+    email2: [{ key: "email", label: "E-mail" }],
+    pixconsulta: [{ key: "short_cpf", label: "CPF curto" }, { key: "partial_name", label: "Nome parcial" }],
+    wifi: [{ key: "lat", label: "Latitude" }, { key: "long", label: "Longitude" }, { key: "radius", label: "Raio (opcional)" }],
+    cep2: [{ key: "cep", label: "CEP" }],
+    bin: [{ key: "bin", label: "BIN" }],
+    bin2: [{ key: "bin", label: "BIN" }],
+    parentes: [{ key: "parentes", label: "CPF/ID Parentes" }],
+    chassi: [{ key: "chassi", label: "Chassi" }],
+    chassi1: [{ key: "chassi", label: "Chassi" }],
+    renavam: [{ key: "renavam", label: "Renavam" }],
+    obito: [{ key: "obito", label: "CPF/ID Óbito" }],
+    socios: [{ key: "socios", label: "CNPJ Sócios" }],
+    vacinas: [{ key: "vacinas", label: "CPF Vacinas" }],
+    pai: [{ key: "pai", label: "CPF/Nome do Pai" }],
+    cns: [{ key: "cns", label: "CNS" }],
+    abreviado: [{ key: "abreviado", label: "Nome Abreviado" }],
+    cpfnacional: [{ key: "cpf", label: "CPF Nacional" }]
+  };
+
+  const categorias = {
+    puxadas: [
+      "cpf","cpf2","cpf3","cpf4","cpf5","srs","score","score2","nacional","cnh","fotorj","rg","rg2",
+      "telefone","telefone2","telefone3","tel","tel2","phone","phone2","placa","placa2","placa3","placa4",
+      "cnpj","cnpj2","nome","nome2","email","email2","pixconsulta","wifi","cep2","bin","bin2","parentes",
+      "chassi","chassi1","renavam","obito","socios","vacinas","pai","cns","abreviado","cpfnacional"
+    ],
+    dadosPessoais: [
+      "cpf","cnh","score","abreviado","nome","telefone","placa","srs","fotorj",
+      "chassi1","email","rg","cep","cnpj","obito","bin2","parentes"
+    ],
+    utilitarios: ["consulta_cep","consulta_ddd","consulta_clima","gerar_cpf"],
+    download: ["yt_public_search","yt_public_video","yt_public_download","yt_public_download_mp3","download_tiktok_video","download_mediafire"],
+    pesquisas: ["pesquisa_youtube","pesquisa_anime","pesquisa_playstore","pesquisa_gimage","pesquisa_pinterestgif"],
+    ia: ["ia_chatgpt","ia_gemini","ia_imagem","ia_hd"],
+    canva: ["canva_bemvindo","canva_level","canva_musiccard"],
+    imagens: ["imagem_animememe","imagem_metadinha","imagem_metadinha2"],
+    figurinhas: ["figurinha_ia"],
+    adulto: ["adult_hentai","adult_xvideos"],
+    edits: ["edits_edts","edits_jujutsu","edits_naruto","edits_freefire"]
+  };
+
+  const rotaToFieldsDadosPessoais = {
+    cpf: [{ key: "cpf", label: "CPF" }],
+    cnh: [{ key: "cnh", label: "CNH/CPF" }],
+    score: [{ key: "score", label: "Score/CPF" }],
+    abreviado: [{ key: "abreviado", label: "Abreviado" }],
+    nome: [{ key: "nome", label: "Nome" }],
+    telefone: [{ key: "telefone", label: "Telefone" }],
+    placa: [{ key: "placa", label: "Placa" }],
+    srs: [{ key: "srs", label: "SRS/CPF" }],
+    fotorj: [{ key: "fotorj", label: "FotoRJ/CPF" }],
+    chassi1: [{ key: "chassi", label: "Chassi" }],
+    email: [{ key: "email", label: "E-mail" }],
+    rg: [{ key: "rg", label: "RG" }],
+    cep: [{ key: "cep", label: "CEP" }],
+    cnpj: [{ key: "cnpj", label: "CNPJ" }],
+    obito: [{ key: "obito", label: "Óbito/CPF" }],
+    bin2: [{ key: "bin2", label: "BIN2" }],
+    parentes: [{ key: "parentes", label: "Parentes" }]
+  };
+
+  const rotaToFieldsUtil = {
+    consulta_cep: [{ key: "cep", label: "CEP" }],
+    consulta_ddd: [{ key: "ddd", label: "DDD" }],
+    consulta_clima: [{ key: "codigoICAO", label: "Código ICAO" }],
+    gerar_cpf: []
+  };
+
+  const rotaToFieldsApi = {
+    yt_public_search: [{ key: "nome", label: "Nome/Termo" }],
+    yt_public_video: [{ key: "nome", label: "Nome/URL" }],
+    yt_public_download: [{ key: "nome", label: "Nome/URL" }],
+    yt_public_download_mp3: [{ key: "nome", label: "Nome/URL" }],
+    download_tiktok_video: [{ key: "url", label: "URL do TikTok" }],
+    download_mediafire: [{ key: "url", label: "URL do Mediafire" }],
+
+    pesquisa_youtube: [{ key: "nome", label: "Nome" }],
+    pesquisa_anime: [{ key: "nome", label: "Nome do Anime" }],
+    pesquisa_playstore: [{ key: "nome", label: "Nome do App" }],
+    pesquisa_gimage: [{ key: "q", label: "Busca (q)" }],
+    pesquisa_pinterestgif: [{ key: "nome", label: "Nome" }],
+
+    ia_chatgpt: [{ key: "query", label: "Pergunta (query)" }],
+    ia_gemini: [{ key: "query", label: "Pergunta (query)" }],
+    ia_imagem: [{ key: "query", label: "Prompt da Imagem" }],
+    ia_hd: [{ key: "url", label: "URL da Imagem" }],
+
+    canva_bemvindo: [
+      { key: "titulo", label: "Título" },
+      { key: "avatar", label: "URL do Avatar" },
+      { key: "fundo", label: "URL do Fundo" },
+      { key: "desc", label: "Descrição" },
+      { key: "nome", label: "Nome" }
+    ],
+    canva_level: [
+      { key: "nome", label: "Nome" },
+      { key: "avatar", label: "URL do Avatar" },
+      { key: "fundo", label: "URL do Fundo" },
+      { key: "level1", label: "Level Atual" },
+      { key: "level2", label: "Próximo Level" }
+    ],
+    canva_musiccard: [
+      { key: "name", label: "Nome" },
+      { key: "avatar", label: "URL do Avatar" },
+      { key: "artistName", label: "Artista" },
+      { key: "time", label: "Tempo (ex: 1,36)" }
+    ],
+
+    imagem_animememe: [],
+    imagem_metadinha: [],
+    imagem_metadinha2: [],
+    figurinha_ia: [{ key: "query", label: "Prompt da Figurinha" }],
+    adult_hentai: [],
+    adult_xvideos: [{ key: "q", label: "Pesquisa" }],
+    edits_edts: [],
+    edits_jujutsu: [],
+    edits_naruto: [],
+    edits_freefire: []
+  };
+
+  const elCategoria = document.getElementById("painelCategoria");
+  const elRota = document.getElementById("painelRota");
+  const elParams = document.getElementById("painelParametros");
+  const elResultado = document.getElementById("painelResultado");
+  const elMidia = document.getElementById("painelMidia");
+  const elCopiar = document.getElementById("painelCopiar");
+  const elConsultar = document.getElementById("painelConsultar");
+  const elLimpar = document.getElementById("painelLimpar");
+  let painelObjectUrl = null;
+
+  function buildRouteOptions() {
+    const categoria = elCategoria.value;
+    const routes = categorias[categoria] || [];
+    elRota.innerHTML = "";
+    routes.forEach((r) => {
+      const opt = document.createElement("option");
+      opt.value = r;
+      opt.textContent = r;
+      elRota.appendChild(opt);
+    });
+    renderFields();
+  }
+
+  function getFields() {
+    const categoria = elCategoria.value;
+    const rota = elRota.value;
+    if (categoria === "puxadas") return fieldsByTipo[rota] || [];
+    if (categoria === "dadosPessoais") return rotaToFieldsDadosPessoais[rota] || [];
+    if (categoria === "utilitarios") return rotaToFieldsUtil[rota] || [];
+    return rotaToFieldsApi[rota] || [];
+  }
+
+  function renderFields() {
+    const fields = getFields();
+    elParams.innerHTML = "";
+    fields.forEach((f) => {
+      const wrap = document.createElement("div");
+      const label = document.createElement("label");
+      label.className = "block text-sm mb-1";
+      label.textContent = f.label;
+      const input = document.createElement("input");
+      input.className = "form-control !bg-slate-900 !text-white !border-slate-700";
+      input.placeholder = f.label;
+      input.dataset.param = f.key;
+      wrap.appendChild(label);
+      wrap.appendChild(input);
+      elParams.appendChild(wrap);
+    });
+  }
+
+  function collectParams() {
+    const out = {};
+    elParams.querySelectorAll("input[data-param]").forEach((i) => {
+      const val = (i.value || "").trim();
+      if (val) out[i.dataset.param] = val;
+    });
+    return out;
+  }
+
+  function buildRequestUrl() {
+    const categoria = elCategoria.value;
+    const rota = elRota.value;
+    const params = collectParams();
+    const q = new URLSearchParams();
+    Object.entries(params).forEach(([k, v]) => q.set(k, v));
+    q.set("apikey", painelApiKey);
+    q.set("formato", "texto");
+
+    if (categoria === "puxadas") return `/api/puxadas/consulta/${encodeURIComponent(rota)}?${q.toString()}`;
+    if (categoria === "dadosPessoais") return `/api/dados-pessoais/${encodeURIComponent(rota)}?${q.toString()}`;
+    if (categoria === "utilitarios") {
+      if (rota === "consulta_cep") return `/api/consulta/cep/${encodeURIComponent(params.cep || "")}?apikey=${encodeURIComponent(painelApiKey)}&formato=texto`;
+      if (rota === "consulta_ddd") return `/api/consulta/ddd/${encodeURIComponent(params.ddd || "")}?apikey=${encodeURIComponent(painelApiKey)}&formato=texto`;
+      if (rota === "consulta_clima") return `/api/consulta/clima/aeroporto/${encodeURIComponent(params.codigoICAO || "")}?apikey=${encodeURIComponent(painelApiKey)}&formato=texto`;
+      return `/api/gerar-cpf?apikey=${encodeURIComponent(painelApiKey)}&formato=texto`;
+    }
+
+    const withKey = (base) => `${base}${base.includes("?") ? "&" : "?"}apikey=${encodeURIComponent(painelApiKey)}`;
+
+    if (rota === "yt_public_search") return `/api/public/youtube/search?nome=${encodeURIComponent(params.nome || "")}`;
+    if (rota === "yt_public_video") return `/api/public/youtube/video?nome=${encodeURIComponent(params.nome || "")}`;
+    if (rota === "yt_public_download") return `/api/public/youtube/download?nome=${encodeURIComponent(params.nome || "")}`;
+    if (rota === "yt_public_download_mp3") return `/api/public/youtube/download-mp3?nome=${encodeURIComponent(params.nome || "")}`;
+    if (rota === "download_tiktok_video") return withKey(`/api/download/tiktok/video?url=${encodeURIComponent(params.url || "")}`);
+    if (rota === "download_mediafire") return withKey(`/api/download/mediafire?url=${encodeURIComponent(params.url || "")}`);
+
+    if (rota === "pesquisa_youtube") return withKey(`/api/pesquisa/youtube?nome=${encodeURIComponent(params.nome || "")}`);
+    if (rota === "pesquisa_anime") return `/api/pesquisa/anime?nome=${encodeURIComponent(params.nome || "")}`;
+    if (rota === "pesquisa_playstore") return withKey(`/api/pesquisa/playstore?nome=${encodeURIComponent(params.nome || "")}`);
+    if (rota === "pesquisa_gimage") return withKey(`/api/pesquisa/gimage?q=${encodeURIComponent(params.q || "")}`);
+    if (rota === "pesquisa_pinterestgif") return withKey(`/api/pesquisa/pinterestgif?nome=${encodeURIComponent(params.nome || "")}`);
+
+    if (rota === "ia_chatgpt") return `/api/ai/texto/chatgpt?query=${encodeURIComponent(params.query || "")}`;
+    if (rota === "ia_gemini") return `/api/ai/texto/gemini?query=${encodeURIComponent(params.query || "")}`;
+    if (rota === "ia_imagem") return withKey(`/api/ai/imagem/imagemAi?query=${encodeURIComponent(params.query || "")}`);
+    if (rota === "ia_hd") return `/api/ai/hd/imagem?url=${encodeURIComponent(params.url || "")}`;
+
+    if (rota === "canva_bemvindo") return withKey(`/api/canva/bemVindo?titulo=${encodeURIComponent(params.titulo || "")}&avatar=${encodeURIComponent(params.avatar || "")}&fundo=${encodeURIComponent(params.fundo || "")}&desc=${encodeURIComponent(params.desc || "")}&nome=${encodeURIComponent(params.nome || "")}`);
+    if (rota === "canva_level") return withKey(`/api/canva/level?nome=${encodeURIComponent(params.nome || "")}&avatar=${encodeURIComponent(params.avatar || "")}&fundo=${encodeURIComponent(params.fundo || "")}&level1=${encodeURIComponent(params.level1 || "")}&level2=${encodeURIComponent(params.level2 || "")}`);
+    if (rota === "canva_musiccard") return withKey(`/api/canva/musicCard?name=${encodeURIComponent(params.name || "")}&avatar=${encodeURIComponent(params.avatar || "")}&artistName=${encodeURIComponent(params.artistName || "")}&time=${encodeURIComponent(params.time || "")}`);
+
+    if (rota === "imagem_animememe") return `/api/imagem/animememe`;
+    if (rota === "imagem_metadinha") return `/api/imagem/metadinha`;
+    if (rota === "imagem_metadinha2") return `/api/imagem/metadinha2`;
+    if (rota === "figurinha_ia") return withKey(`/api/ai/sticker/stickAi?query=${encodeURIComponent(params.query || "")}`);
+    if (rota === "adult_hentai") return withKey(`/api/18/hentai`);
+    if (rota === "adult_xvideos") return withKey(`/api/18/xvideos?q=${encodeURIComponent(params.q || "")}`);
+    if (rota === "edits_edts") return `/api/video/edts`;
+    if (rota === "edits_jujutsu") return `/api/video/editsjujutsu`;
+    if (rota === "edits_naruto") return `/api/video/editsnaruto`;
+    if (rota === "edits_freefire") return `/api/video/freefire`;
+    return "/";
+  }
+
+  async function consultar() {
+    function objectToText(data, indent = 0) {
+      const pad = "  ".repeat(indent);
+      if (data === null || data === undefined) return `${pad}-`;
+      if (typeof data !== "object") return `${pad}${String(data)}`;
+      if (Array.isArray(data)) {
+        if (!data.length) return `${pad}(sem resultados)`;
+        return data
+          .map((item, index) => {
+            const head = `${pad}${index + 1}.`;
+            const body = objectToText(item, indent + 1);
+            return `${head}\n${body}`;
+          })
+          .join("\n");
+      }
+      const entries = Object.entries(data);
+      if (!entries.length) return `${pad}(vazio)`;
+      return entries
+        .map(([k, v]) => {
+          if (v && typeof v === "object") {
+            return `${pad}${k}:\n${objectToText(v, indent + 1)}`;
+          }
+          return `${pad}${k}: ${v === null || v === undefined ? "-" : String(v)}`;
+        })
+        .join("\n");
+    }
+
+    try {
+      const url = buildRequestUrl();
+      elResultado.textContent = "Consultando...";
+      if (painelObjectUrl) {
+        URL.revokeObjectURL(painelObjectUrl);
+        painelObjectUrl = null;
+      }
+      elMidia.style.display = "none";
+      elMidia.innerHTML = "";
+      const res = await fetch(url, { method: "GET", credentials: "same-origin" });
+      const contentType = (res.headers.get("content-type") || "").toLowerCase();
+      const isTextLike = contentType.includes("json") || contentType.startsWith("text/") || contentType.includes("javascript");
+
+      if (isTextLike) {
+        const text = await res.text();
+        let parsed = text;
+        try { parsed = JSON.parse(text); } catch (_) {}
+        elResultado.textContent = typeof parsed === "string" ? parsed : objectToText(parsed);
+      } else {
+        const blob = await res.blob();
+        painelObjectUrl = URL.createObjectURL(blob);
+        elResultado.textContent = `Resposta de mídia/arquivo: ${contentType || "binário"} (${blob.size} bytes)`;
+
+        if (contentType.startsWith("image/")) {
+          elMidia.innerHTML = `<img src="${painelObjectUrl}" alt="preview" style="max-width:100%;border-radius:8px;border:1px solid #334155;" />`;
+          elMidia.style.display = "block";
+        } else if (contentType.startsWith("audio/")) {
+          elMidia.innerHTML = `<audio controls style="width:100%;" src="${painelObjectUrl}"></audio>`;
+          elMidia.style.display = "block";
+        } else if (contentType.startsWith("video/")) {
+          elMidia.innerHTML = `<video controls style="max-width:100%;border-radius:8px;border:1px solid #334155;" src="${painelObjectUrl}"></video>`;
+          elMidia.style.display = "block";
+        } else {
+          elMidia.innerHTML = `<a href="${url}" target="_blank" rel="noopener" class="btn btn-primary">ABRIR/BAIXAR ARQUIVO</a>`;
+          elMidia.style.display = "block";
+        }
+      }
+      if (!res.ok) {
+        elResultado.textContent = `[HTTP ${res.status}] ` + elResultado.textContent;
+      }
+    } catch (e) {
+      elResultado.textContent = `Erro: ${e.message}`;
+    }
+  }
+
+  elCategoria.addEventListener("change", buildRouteOptions);
+  elRota.addEventListener("change", renderFields);
+  elConsultar.addEventListener("click", consultar);
+  elLimpar.addEventListener("click", () => {
+    elParams.querySelectorAll("input[data-param]").forEach((i) => (i.value = ""));
+    elResultado.textContent = "";
+    if (painelObjectUrl) {
+      URL.revokeObjectURL(painelObjectUrl);
+      painelObjectUrl = null;
+    }
+    elMidia.style.display = "none";
+    elMidia.innerHTML = "";
+  });
+
+  elCopiar.addEventListener("click", async () => {
+    const texto = (elResultado.textContent || "").trim();
+    if (!texto) return;
+    try { await navigator.clipboard.writeText(texto); } catch (_) {}
+  });
+  buildRouteOptions();
+})();
+</script>
+                         
+                          <!-- END: Group Chart2 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+<br>
+
+
+
+                          </ul>
+                          <!-- END: FIles Card -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                    
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!---- fim dos bots
+      
+      
+
+      <!-- BEGIN: Footer For Desktop and tab -->
+      <footer class="md:block hidden" id="footer">
+        <div class="site-footer px-6 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-300 py-4 ltr:ml-[248px] rtl:mr-[248px]">
+          <div class="grid md:grid-cols-2 grid-cols-1 md:gap-5">
+            <div class="text-center text-sm">
+              COPYRIGHT ©
+              <span id="thisYear"></span>
+              <%= nomeApi %> todos direitos reservados
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- END: Footer For Desktop and tab -->
+
+      <div class="bg-white bg-no-repeat custom-dropshadow footer-bg dark:bg-slate-700 flex justify-around items-center
+    backdrop-filter backdrop-blur-[40px] fixed left-0 bottom-0 w-full z-[9999] bothrefm-0 py-[12px] px-4 md:hidden">
+        <a href="/">
+          <div>
+            <span class="relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+          text-slate-900 ">
+        <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+            </span>
+            <span class="block text-[11px] text-slate-600 dark:text-slate-300">
+        Home
+      </span>
+          </div>
+        </a>
+        <a href="/perfil" class="relative bg-white bg-no-repeat backdrop-filter backdrop-blur-[40px] rounded-full footer-bg dark:bg-slate-700
+      h-[65px] w-[65px] z-[-1] -mt-[40px] flex justify-center items-center">
+          <div class="h-[50px] w-[50px] rounded-full relative left-[0px] hrefp-[0px] custom-dropshadow">
+            <img src="<%= foto %>" alt="" class="w-full h-full rounded-full border-2 border-slate-100">
+          </div>
+        </a>
+        <a href="https://chat.whatsapp.com/BO0FutzRGZ93Qex7FRC4M7">
+          <div>
+            <span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
+          text-slate-900">
+        <iconify-icon icon="ic:baseline-whatsapp"></iconify-icon>
+            </span>
+            <span class=" block text-[11px] text-slate-600 dark:text-slate-300">
+       Grupo de divulgação 
+      </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+  <!-- scripts -->
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/rt-plugins.js"></script>
+  <script src="assets/js/app.js"></script>
+<script>
+(() => {
+  const audio = document.getElementById("dashboardMusic");
+  const btn = document.getElementById("musicToggleBtn");
+  const icon = document.getElementById("musicToggleIcon");
+  const text = document.getElementById("musicToggleText");
+  if (!audio || !btn || !icon || !text) return;
+
+  function updateState() {
+    if (audio.paused) {
+      icon.setAttribute("icon", "heroicons-outline:play");
+      text.textContent = "TOCAR MÚSICA";
+    } else {
+      icon.setAttribute("icon", "heroicons-outline:pause");
+      text.textContent = "PAUSAR MÚSICA";
+    }
+  }
+
+  btn.addEventListener("click", async () => {
+    try {
+      if (audio.paused) {
+        await audio.play();
+      } else {
+        audio.pause();
+      }
+    } catch (_) {}
+    updateState();
+  });
+
+  audio.addEventListener("play", updateState);
+  audio.addEventListener("pause", updateState);
+  updateState();
+})();
+</script>
+<script>
+(() => {
+  const canvas = document.getElementById("dashboardParticles");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const particles = [];
+  const count = 90;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function build() {
+    particles.length = 0;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        r: 2 + Math.random() * 2.5
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(225, 6, 0, 0.78)";
+      ctx.fill();
+
+      for (let j = i + 1; j < particles.length; j++) {
+        const q = particles[j];
+        const dx = p.x - q.x;
+        const dy = p.y - q.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 130) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = "rgba(225, 6, 0, 0.22)";
+          ctx.stroke();
+        }
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener("resize", () => {
+    resize();
+    build();
+  });
+
+  resize();
+  build();
+  draw();
+})();
+</script>
+</body>
+</html>

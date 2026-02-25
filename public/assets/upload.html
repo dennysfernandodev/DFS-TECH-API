@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<meta charset="UTF-8">
+<title>Upload de Arquivos</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: black;
+  color: white;
+  overflow: hidden;
+}
+
+/* Vídeo de abertura */
+#introVideo {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 9998;
+}
+
+/* Botão Skip */
+#skipBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  padding: 10px 20px;
+  background: rgba(225, 6, 0,0.8);
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#skipBtn:hover { background: rgba(225, 6, 0,1); }
+
+/* Canvas de partículas */
+canvas#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Container principal da página */
+.container {
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+  display: none; /* Escondido até o vídeo terminar */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Cards */
+.box {
+  background-color: rgba(0,0,0,0.75);
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(225, 6, 0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Imagem decorativa do card */
+.box img {
+  width: 80%;
+  max-width: 250px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* Cabeçalho */
+h2 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #ff0033;
+  text-shadow: 0 0 10px #ff0033;
+}
+
+.custom-file {
+  position: relative;
+  width: 100%;
+}
+
+.custom-file input[type="file"] {
+  width: 100%;
+  height: 60px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+}
+
+.custom-file-label {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 60px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #ff0033;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2em;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.custom-file-label:hover {
+  background: #ff0033;
+  color: black;
+}
+
+.custom-file-label svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px); }
+}
+
+button.copy-btn {
+  background-color: transparent;
+  color: white;
+  border: 3px solid #ff0033;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+button.copy-btn:hover {
+  background-color: #ff0033;
+  color: black;
+}
+
+.preview-item img,
+.preview-item video,
+.preview-item audio {
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.message-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(225, 6, 0,0.1);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.message-box img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.message-content .author {
+  font-size: 0.9em;
+  color: #ff0033;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 5px;
+}
+
+.message-content a {
+  color: #ff0033;
+  text-decoration: none;
+  word-wrap: break-word;
+  margin-bottom: 5px;
+}
+
+.message-content button {
+  background-color: #ff0033;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.message-content button:hover {
+  background-color: #FF4D40;
+}
+
+.footer {
+  margin-top: 30px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8em;
+  color: #ff0033;
+  text-shadow: 2px 2px 3px black, 0 0 10px #ff0033;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.footer img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .box { padding: 20px; width: 100%; }
+  h2 { font-size: 1.5em; }
+  button.copy-btn { width: 100%; }
+  .footer { font-size: 1.4em; }
+  .footer img { width: 30px; height: 30px; }
+  .message-box img { width: 30px; height: 30px; }
+}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body>
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<!-- Vídeo de abertura -->
+<video id="introVideo" autoplay muted>
+  <source src="https://files.catbox.moe/zqp8fc.mp4" type="video/mp4">
+</video>
+<button id="skipBtn">Skip</button>
+
+<canvas id="particles"></canvas>
+
+<div class="container" id="mainContainer">
+  <!-- Upload Único -->
+  <div class="box">
+    <img src="https://files.catbox.moe/w6l8pf.jpg" alt="Imagem decorativa">
+    <form id="singleUploadForm" enctype="multipart/form-data">
+      <h2>Upload Único</h2>
+      <div class="custom-file">
+        <input type="file" name="file" id="singleFileInput" required />
+        <div class="custom-file-label">
+          <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h6V9h3.67L12 2z"/></svg>
+          Escolher Arquivo
+        </div>
+      </div>
+      <div class="preview" id="singlePreview"></div>
+    </form>
+    <div id="singleResult" class="link"></div>
+  </div>
+
+  <!-- Upload Múltiplo -->
+  <div class="box">
+    <img src="https://files.catbox.moe/w6l8pf.jpg" alt="Imagem decorativa">
+    <form id="multiUploadForm" enctype="multipart/form-data">
+      <h2>Upload Múltiplo</h2>
+      <div class="custom-file">
+        <input type="file" name="files" id="multiFileInput" multiple required />
+        <div class="custom-file-label">
+          <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h6V9h3.67L12 2z"/></svg>
+          Escolher Arquivos
+        </div>
+      </div>
+    </form>
+    <div id="multiResult" class="link"></div>
+  </div>
+
+  <div class="footer">
+    <img src="https://files.catbox.moe/w6l8pf.jpg" alt="Logo DFS TECH API">
+    DFS TECH UPLOADS
+  </div>
+</div>
+
+<script>
+// Função para mostrar o container e esconder vídeo
+function showMainContainer() {
+  introVideo.style.display = 'none';
+  skipBtn.style.display = 'none';
+  mainContainer.style.display = 'flex';
+}
+
+const introVideo = document.getElementById('introVideo');
+const mainContainer = document.getElementById('mainContainer');
+const skipBtn = document.getElementById('skipBtn');
+
+// Evento ao terminar o vídeo
+introVideo.addEventListener('ended', showMainContainer);
+skipBtn.addEventListener('click', showMainContainer);
+
+// Partículas
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener("resize",resizeCanvas); resizeCanvas();
+class Particle { constructor(){this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.size=Math.random()*3+1; this.speedX=(Math.random()-0.5)*2; this.speedY=(Math.random()-0.5)*2; this.color="rgba(225, 6, 0,"+(Math.random()*0.7+0.3)+")";} update(){this.x+=this.speedX; this.y+=this.speedY; if(this.x<0||this.x>canvas.width)this.speedX*=-1; if(this.y<0||this.y>canvas.height)this.speedY*=-1;} draw(){ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill();} }
+function initParticles(){particles=[]; for(let i=0;i<100;i++) particles.push(new Particle());}
+function animateParticles(){ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animateParticles);}
+initParticles(); animateParticles();
+
+// Upload Functions
+async function uploadSingle(file){ const formData=new FormData(); formData.append('file',file); const res=await fetch('/upload/single',{method:'POST',body:formData}); return res.json();}
+async function uploadMulti(files){ const formData=new FormData(); for(let f of files) formData.append('files',f); const res=await fetch('/upload/multi',{method:'POST',body:formData}); return res.json();}
+
+// Mensagens de resultado
+function createMessageBox(url){
+  const box=document.createElement('div');
+  box.className='message-box';
+  box.innerHTML=`
+    <img src="https://blackstorage.store/midia/1758217977628.jpg" alt="Tosh Icon">
+    <div class="message-content">
+      <div class="author">Tosh DFS TECH</div>
+      <a href="${url}" target="_blank">${url}</a>
+      <button>Copiar</button>
+    </div>`;
+  const btn=box.querySelector('button');
+  btn.addEventListener('click',()=>{navigator.clipboard.writeText(url); btn.textContent="Copiado!"; setTimeout(()=>{btn.textContent="OK";},2000);});
+  return box;
+}
+
+// Upload Único
+const singleInput=document.getElementById('singleFileInput');
+const singleResult=document.getElementById('singleResult');
+singleInput.addEventListener('change', async()=>{singleResult.innerHTML=''; const file=singleInput.files[0]; if(!file) return; const data=await uploadSingle(file); if(data.fileUrl){singleResult.appendChild(createMessageBox(data.fileUrl));} else singleResult.innerHTML=data.error;});
+
+// Upload Múltiplo
+const multiInput=document.getElementById('multiFileInput');
+const multiResult=document.getElementById('multiResult');
+multiInput.addEventListener('change', async()=>{multiResult.innerHTML=''; const files=multiInput.files; if(files.length===0) return; const data=await uploadMulti(files); if(data.fileUrls){data.fileUrls.forEach(url=>{multiResult.appendChild(createMessageBox(url));});} else multiResult.innerHTML=data.error;});
+</script>
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

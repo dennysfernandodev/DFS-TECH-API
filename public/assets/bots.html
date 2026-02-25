@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DFS TECH</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ================= DFS TECH THEME ================= */
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* ======= FUNDO DE VÍDEO ======= */
+#bgVideo {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -3;
+  filter: brightness(0.2);
+}
+
+/* ======= PIXELS VERMELHOS ======= */
+#pixelCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+}
+
+/* ======= CAMADA ESCURA ======= */
+.overlay-dark {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: -1;
+}
+
+/* ======= CABEÇALHO ======= */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #B00000;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #C40000;
+  font-size: 20px;
+}
+
+.header .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.header .links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* ======= BOTÃO VOLTAR ======= */
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #B00000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.back-btn:hover {
+  background: #006D8C;
+  transform: scale(1.05);
+}
+
+.header .links a {
+  color: white;
+  font-size: 20px;
+  transition: 0.3s;
+}
+.header .links a:hover {
+  color: #B00000;
+  transform: scale(1.2);
+}
+
+/* ======= HERO ======= */
+.hero {
+  text-align: center;
+  padding-top: 140px;
+  padding-bottom: 80px;
+}
+.hero h1 {
+  font-size: 48px;
+  color: #C40000;
+  text-shadow: 0 0 30px #B00000;
+  animation: fadeInDown 2s ease-out;
+}
+.hero p {
+  color: #ccc;
+  font-size: 18px;
+  max-width: 700px;
+  margin: 20px auto;
+  animation: fadeInUp 3s ease-out;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======= CARDS ======= */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 60px 20px;
+}
+
+.card {
+  background: rgba(15, 0, 0, 0.8);
+  border: 1px solid #006D8C;
+  border-radius: 15px;
+  width: 260px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px #B0000040;
+  transition: 0.4s ease;
+  animation: floatCard 4s ease-in-out infinite;
+}
+.card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 30px #B00000;
+}
+
+.card i {
+  font-size: 40px;
+  color: #C40000;
+  margin-bottom: 10px;
+  animation: pulse 2s infinite;
+}
+.card h3 {
+  color: #FF2A1F;
+  margin-bottom: 10px;
+}
+.card p {
+  color: #bbb;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.card .btn-download {
+  display: inline-block;
+  background: linear-gradient(45deg, #007EA3, #B00000);
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #B0000050;
+}
+.card .btn-download:hover {
+  background: linear-gradient(45deg, #B00000, #003C4D);
+  box-shadow: 0 0 25px #B00000;
+}
+
+@keyframes pulse {
+  0%, 100% { text-shadow: 0 0 10px #B00000; }
+  50% { text-shadow: 0 0 25px #B00000; }
+}
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ======= FOOTER ======= */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid #B00000;
+  background: rgba(0, 0, 0, 0.8);
+}
+.footer p {
+  color: #999;
+}
+.footer a {
+  color: #FF2A1F;
+  text-decoration: none;
+}
+.footer a:hover {
+  color: white;
+  text-shadow: 0 0 10px #B00000;
+}
+
+@media (max-width: 768px) {
+  .cards { flex-direction: column; align-items: center; }
+}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body>
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<canvas id="pixelCanvas"></canvas>
+<div class="overlay-dark"></div>
+
+<!-- ======= HEADER ======= -->
+<header class="header">
+  <div class="logo">
+    <img src="https://files.catbox.moe/w6l8pf.jpg" alt="logo">
+    Tosh DFS TECH 
+  </div>
+  <div class="links">
+    <button class="back-btn" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="5511961527811"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="5511961527811"><i class="fa-brands fa-telegram"></i></a>
+    <a href="https://whatsapp.com/channel/0029VazmYZk72WTneBn3b91t"><i class="fa-solid fa-robot"></i></a>
+  </div>
+</header>
+
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <h1>Projetos Tosh</h1>
+  <p>Area de downloads de alguns do meus projetos Leia a documentação de cada um se possível para precauções de possíveis erros</p>
+</section>
+
+<!-- ======= CARDS ======= -->
+<section class="cards">
+  <div class="card">
+    <i class="fa-brands fa-whatsapp"></i>
+    <h3>Base-Delta</h3>
+    <p>Base descriptografada com comandos iniciais para construir seu próprio bot leia a documentação e cada comando como funciona para conseguir emplementar comandos de outros bot se quiser</p>
+    <a href="https://github.com/toshblackout/Base-Delta" class="btn-download"><i class="fa-solid fa-download"></i> Baixar Agora</a>
+  </div>
+  
+    <div class="card">
+    <i class="fa-brands fa-whatsapp"></i>
+    <h3>DFS TECH HOSTING Bot</h3>
+    <p>Bot completo para proteção de grupos com sistemas de key infinitas</p>
+    <a href="https://github.com/toshblackout/Fast-Host_bot" class="btn-download"><i class="fa-solid fa-download"></i> Baixar Agora</a>
+  </div>
+
+  <div class="card">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <h3>Bot Discord DFS TECH</h3>
+    <p>Busque informações, gerencie dados e encontre respostas rápidas com automação.</p>
+    <a href="https://www.mediafire.com/file/9wp748ns81bsi6k/BLACKAUT_DISCORD.zip/file" class="btn-download"><i class="fa-solid fa-download"></i> Baixar Agora</a>
+  </div>
+
+  <div class="card">
+    <i class="fa-brands fa-telegram"></i>
+    <h3>Bot Telegram</h3>
+    <p>Controle grupos e serviços no Telegram com automações poderosas e seguras.</p>
+    <a href="https://mega.nz/file/6sgTCKpY#1MpcC0Fgq6_BdfDRMGwQIMRMpWFU3XGZICuU5kowYLM" class="btn-download"><i class="fa-solid fa-download"></i> Baixar Agora</a>
+  </div>
+
+  <div class="card">
+    <i class="fa-solid fa-layer-group"></i>
+    <h3>Cases</h3>
+    <p>Veja os cases reais desenvolvidos com a DFS TECH API, otimizando negócios e comunidades.</p>
+    <a href="https://github.com/toshblackout/Packblackout_1" class="btn-download"><i class="fa-solid fa-download"></i> Baixar Agora</a>
+  </div>
+</section>
+
+<!-- ======= FOOTER ======= -->
+<footer class="footer">
+  <p>© 2025 DFS TECH  | Powered by Tosh</p>
+  <a href="https://chat.whatsapp.com/EXI0YNLuVePI2nIVQr9xS8" target="_blank">DFS TECH Comunidade</a>
+</footer>
+
+<!-- ======= MÚSICA DE FUNDO ======= -->
+<audio id="bgMusic" autoplay loop>
+  <source src="https://files.catbox.moe/pvdyxd.mp3" type="audio/mp3">
+</audio>
+
+<!-- ======= SCRIPT DOS PIXELS ======= -->
+<script>
+const canvas = document.getElementById("pixelCanvas");
+const ctx = canvas.getContext("2d");
+
+let pixels = [];
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+class Pixel {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * -canvas.height;
+    this.size = Math.random() * 2 + 1;
+    this.speed = Math.random() * 3 + 1;
+    this.opacity = Math.random() * 0.8 + 0.2;
+  }
+  update() {
+    this.y += this.speed;
+    if (this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.fillStyle = `rgba(225, 6, 0, ${this.opacity})`;
+    ctx.fillRect(this.x, this.y, this.size, this.size);
+  }
+}
+
+function initPixels() {
+  pixels = [];
+  const count = canvas.width / 3;
+  for (let i = 0; i < count; i++) pixels.push(new Pixel());
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  pixels.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+initPixels();
+animate();
+</script>
+
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

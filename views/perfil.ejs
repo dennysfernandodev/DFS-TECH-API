@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zxx" dir="ltr" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="painel dos administradores">
+  <title>Perfil - <%= username %></title>
+  <link rel="icon" type="image/png" href="https://files.catbox.moe/w6l8pf.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/rt-plugins.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #000; /* Preto sólido */
+      color: white;
+      overflow: hidden;
+    }
+
+    /* Canvas de partículas */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: #000; /* Preto sólido */
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #B00000;
+      border-radius: 8px;
+    }
+
+    .card-title {
+      color: #B00000;
+      font-weight: bold;
+    }
+
+    .form-label {
+      color: white;
+    }
+
+    .form-control {
+      background: rgba(30, 30, 30, 0.9);
+      border: 1px solid #B00000;
+      color: white;
+      padding: 8px;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    .btn-dark {
+      background: #B00000;
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-dark:hover {
+      background: #E10600;
+    }
+
+    .message {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      color: #B00000;
+    }
+
+    .success {
+      color: #FF4D40;
+    }
+  </style>
+</head>
+
+<body class="font-inter dashcode-app" id="body_class">
+  <!-- Canvas de partículas -->
+  <canvas id="particles"></canvas>
+
+  <main class="app-wrapper">
+    <div class="flex flex-col justify-between min-h-screen">
+      <div>
+        <div class="content-wrapper transition-all duration-150" id="content_wrapper">
+          <div class="page-content">
+            <div class="transition-all duration-150 container-fluid" id="page_layout">
+              <div id="content_layout">
+
+                <div class="grid xl:grid-cols-2 grid-cols-1 gap-6">
+                  <div class="card p-6">
+                    <div class="card-body flex flex-col">
+                      <header class="flex mb-5 items-center border-b border-red-500 pb-5">
+                        <div class="flex-1">
+                          <div class="card-title">Configurações do Usuário</div>
+                        </div>
+                      </header>
+                      <center>
+                        <img style="width: 140px; height: 140px; border-radius: 50%; border: 2px solid #B00000;" src="<%= foto %>" alt="<%= username %>">
+                      </center>
+
+                      <div class="message error" id="error-message" style="display: none;"></div>
+                      <div class="message success" id="success-message" style="display: none;"></div>
+
+                      <form class="space-y-4" id="configForm">
+                        <div class="input-area">
+                          <label class="form-label">Usuário</label>
+                          <input type="text" class="form-control" name="nome" placeholder="<%= username %>">
+                        </div>
+
+                        <div class="input-area">
+                          <label class="form-label">Senha</label>
+                          <input type="password" class="form-control" name="senha" placeholder="<%= senha %>">
+                        </div>
+
+                        <div class="input-area">
+                          <label class="form-label">Foto</label>
+                          <input type="text" class="form-control" name="foto" placeholder="<%= foto %>">
+                        </div>
+
+                        <center>
+                          <button class="btn-dark">Salvar</button>
+                        </center>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="text-center py-4 text-sm text-gray-400">
+          COPYRIGHT © <span id="thisYear"></span> <%= nomeApi %> - todos direitos reservados
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('configForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form));
+      data.nome = "<%= username %>";
+
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      try {
+        const response = await fetch('/configuracaoPerfil', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        if (result.error) {
+          errorMessage.textContent = result.result;
+          errorMessage.style.display = 'block';
+        } else {
+          successMessage.textContent = result.result;
+          successMessage.style.display = 'block';
+        }
+      } catch {
+        errorMessage.textContent = "Erro de conexão";
+        errorMessage.style.display = 'block';
+      }
+    });
+
+    // Script partículas
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particlesArray;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    class Particle {
+      constructor(x, y, size, speedX, speedY) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = "#B00000";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      particlesArray = [];
+      let numberOfParticles = 80;
+      for (let i = 0; i < numberOfParticles; i++) {
+        let size = Math.random() * 3 + 1;
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
+        let speedX = (Math.random() - 0.5) * 2;
+        let speedY = (Math.random() - 0.5) * 2;
+        particlesArray.push(new Particle(x, y, size, speedX, speedY));
+      }
+    }
+
+    function animate() {
+      ctx.fillStyle = "#000"; // fundo preto sólido
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      particlesArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+  </script>
+
+</body>
+</html>

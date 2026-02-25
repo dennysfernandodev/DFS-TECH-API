@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>DFS TECH HOSTING</title>
+
+<!-- FAVICONS -->
+<link rel="icon" type="image/png" sizes="32x32" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="apple-touch-icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="shortcut icon" href="https://files.catbox.moe/w6l8pf.jpg">
+
+<!-- Font Awesome e Google Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+:root {
+  --primary-gradient: linear-gradient(135deg,#B00000,#E10600);
+  --secondary: #ffffff;
+  --dark: #000000;
+  --light-gray: rgba(0,0,0,0.6);
+  --text: #ffffff;
+  --bg: #000000;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html, body {width:100%;min-height:100vh;font-family:'Poppins',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;transition:all 0.3s ease;}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 15px;}
+.btn{display:block;width:100%;max-width:280px;margin:10px auto;padding:14px 28px;border-radius:10px;font-weight:600;text-align:center;transition:all 0.3s ease;cursor:pointer;font-size:1.1rem;position:relative;overflow:hidden;}
+.btn-primary{background: var(--primary-gradient); color: var(--secondary); border: 2px solid #B00000; font-weight:600;}
+.btn-primary:hover{opacity:0.9;}
+.btn-outline{background-color:transparent;color:var(--primary);border:2px solid var(--primary);}
+.btn-outline:hover{background-color:var(--primary);color:var(--secondary);}
+.main-header{position:fixed;top:0;left:0;width:100%;background-color:rgba(0,0,0,0.9);box-shadow:0 2px 20px rgba(0,0,0,0.5);z-index:1000;padding:15px 0;}
+.navbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{width:40px;height:40px;}
+.logo h1{font-size:1.3rem;font-weight:600;background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.nav-menu{display:flex;gap:15px;align-items:center;list-style:none;margin:10px 0 0 0;padding:0;flex-wrap:wrap;}
+.nav-menu li{display:inline-block;}
+.nav-menu a{font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px;font-size:0.95rem;}
+.nav-menu a:hover{color:#B00000;}
+.login-btn{margin-left:10px;}
+.hero-section{width:100%;padding:120px 20px 50px;position:relative;z-index:1;background:transparent;}
+.hero-text{text-align:center;max-width:95%;margin:0 auto;line-height:1.6;}
+.hero-text h1{font-size:clamp(1.8rem,6vw,3rem);font-weight:700;background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;margin-bottom:15px;line-height:1.2;}
+.lead{font-size:clamp(1rem,4vw,1.2rem);color:#ccc;margin-bottom:20px;line-height:1.6;}
+.main-footer{background-color:var(--dark);color:var(--secondary);padding:40px 0 20px;position:relative;z-index:2;}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;margin-bottom:30px;}
+.footer-title{font-size:1rem;font-weight:600;margin-bottom:15px;background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.footer-links a{color:#ccc;}
+.footer-links a:hover{color:var(--secondary);}
+.footer-bottom{border-top:1px solid var(--light-gray);text-align:center;padding-top:15px;color:#ccc;}
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+
+/* PLANOS */
+.plans-section{padding:80px 20px 50px;text-align:center;background:transparent;}
+.plans-section h2{font-size:clamp(1.8rem,6vw,2.5rem);background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;margin-bottom:40px;}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.plan-card{background: var(--light-gray); padding:20px;border-radius:15px;box-shadow:0 0 15px rgba(225, 6, 0,0.3);transition:all 0.3s ease;}
+.plan-card:hover{transform:scale(1.05);}
+.plan-card h3{font-size:1.3rem;color:var(--secondary);margin-bottom:10px;}
+.plan-card p{color:#ccc;margin-bottom:15px;font-size:0.95rem;line-height:1.4;}
+.plan-card .price{font-size:1.6rem;color:#B00000;font-weight:700;margin-bottom:15px;}
+.plan-card ul{list-style:none;padding-left:0;margin-bottom:15px;}
+.plan-card ul li{margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.plan-card ul li i{color:#B00000;}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body translate="no">
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<canvas id="bgCanvas"></canvas>
+
+<header class="main-header">
+  <div class="container">
+    <nav class="navbar">
+      <a href="/" class="logo" translate="no">
+        <img src="https://files.catbox.moe/w6l8pf.jpg" alt="DFS TECH HOSTING">
+        <h1 translate="no">DFS TECH HOSTING</h1>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="#planos"><i class="fa-solid fa-list"></i> Planos</a></li>
+        <li><a href="https://fasthost.niib.com.br"><i class="fa-solid fa-globe"></i> DFS TECH HOSTING</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-text" data-aos="fade-up">
+      <h1>Planos de Hospedagem – DFS TECH HOSTING</h1>
+      <p class="lead">Ideal para bots, sites e aplicações leves. Escolha o plano que melhor atende sua necessidade!</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section class="plans-section" id="planos">
+  <div class="container">
+    <h2>Planos Disponíveis</h2>
+    <div class="plans-grid">
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Start</h3>
+        <div class="price">R$10 / mês</div>
+        <ul>
+          <li><i class="fa-solid fa-microchip"></i> 256 MB RAM</li>
+          <li><i class="fa-solid fa-tachometer-alt"></i> 25% CPU</li>
+          <li><i class="fa-solid fa-hdd"></i> 512 MB Disco</li>
+          <li><i class="fa-solid fa-server"></i> 1 servidor</li>
+          <li><i class="fa-solid fa-database"></i> 0 banco de dados</li>
+          <li><i class="fa-solid fa-cloud-arrow-up"></i> 0 backups</li>
+        </ul>
+        <a href="https://wa.me/555197927860?text=Saudações!%20Gostaria%20de%20assinar%20o%20plano%20Start%20no%20valor%20de%20R$10%20reais." class="btn btn-primary" target="_blank">Contratar</a>
+      </div>
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Basic</h3>
+        <div class="price">R$20 / mês</div>
+        <ul>
+          <li><i class="fa-solid fa-microchip"></i> 512 MB RAM</li>
+          <li><i class="fa-solid fa-tachometer-alt"></i> 50% CPU</li>
+          <li><i class="fa-solid fa-hdd"></i> 1 GB Disco</li>
+          <li><i class="fa-solid fa-server"></i> 1 servidor</li>
+          <li><i class="fa-solid fa-database"></i> 1 banco de dados</li>
+          <li><i class="fa-solid fa-cloud-arrow-up"></i> 1 backup</li>
+        </ul>
+        <a href="https://wa.me/555197927860?text=Saudações!%20Gostaria%20de%20assinar%20o%20plano%20Basic%20no%20valor%20de%20R$20%20reais." class="btn btn-primary" target="_blank">Contratar</a>
+      </div>
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Plus</h3>
+        <div class="price">R$30 / mês</div>
+        <ul>
+          <li><i class="fa-solid fa-microchip"></i> 1 GB RAM</li>
+          <li><i class="fa-solid fa-tachometer-alt"></i> 100% CPU</li>
+          <li><i class="fa-solid fa-hdd"></i> 2 GB Disco</li>
+          <li><i class="fa-solid fa-server"></i> 1 servidor</li>
+          <li><i class="fa-solid fa-database"></i> 1 banco de dados</li>
+          <li><i class="fa-solid fa-cloud-arrow-up"></i> 1 backup</li>
+        </ul>
+        <a href="https://wa.me/555197927860?text=Saudações!%20Gostaria%20de%20assinar%20o%20plano%20Plus%20no%20valor%20de%20R$30%20reais." class="btn btn-primary" target="_blank">Contratar</a>
+      </div>
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Pro</h3>
+        <div class="price">R$40 / mês</div>
+        <ul>
+          <li><i class="fa-solid fa-microchip"></i> 2 GB RAM</li>
+          <li><i class="fa-solid fa-tachometer-alt"></i> 200% CPU</li>
+          <li><i class="fa-solid fa-hdd"></i> 4 GB Disco</li>
+          <li><i class="fa-solid fa-server"></i> 1 servidor</li>
+          <li><i class="fa-solid fa-database"></i> 2 bancos de dados</li>
+          <li><i class="fa-solid fa-cloud-arrow-up"></i> 2 backups</li>
+        </ul>
+        <a href="https://wa.me/555197927860?text=Saudações!%20Gostaria%20de%20assinar%20o%20plano%20Pro%20no%20valor%20de%20R$40%20reais." class="btn btn-primary" target="_blank">Contratar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="main-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo">
+          <img src="https://files.catbox.moe/w6l8pf.jpg" alt="DFS TECH HOSTING">
+          <h1>DFS TECH HOSTING</h1>
+        </div>
+        <p>
+✅ Painel moderno<br>
+✅ Ativação rápida<br>
+✅ Upload de 2GB<br>
+✅ Suporte<br>
+✅ Ideal para bots e projetos<br>
+⚡ Entre em contato para contratar
+        </p>
+      </div>
+      <div class="footer-links">
+        <h3 class="footer-title">Grupo de Suporte</h3>
+        <ul>
+          <li><a href="https://chat.whatsapp.com/LDyG4QEaLlpDTgcoJMbv66"><i class="fa-brands fa-whatsapp"></i> Suporte DFS TECH HOSTING</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 DFS TECH HOSTING. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  AOS.init();
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  const resizeCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  const particles = [];
+  const particleCount = 80;
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: 3 + Math.random() * 3, color: `rgba(225, 6, 0,${0.6 + Math.random() * 0.4})` });
+  }
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(0,0,0,0.6)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let p of particles) {
+      ctx.beginPath();ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);ctx.fillStyle = p.color;ctx.fill();
+    }
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120){ ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(particles[j].x, particles[j].y);ctx.strokeStyle = `rgba(225, 6, 0,0.3)`;ctx.stroke(); }
+      }
+    }
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > canvas.width) p.vx*=-1;
+      if(p.y < 0 || p.y > canvas.height) p.vy*=-1;
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+});
+</script>
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

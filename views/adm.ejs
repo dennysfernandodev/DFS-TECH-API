@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zxx" dir="ltr" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="painel dos administradores">
+  <title>Painel administrativo</title>
+  <link rel="icon" type="image/png" href="https://files.catbox.moe/w6l8pf.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- BEGIN: Theme CSS-->
+  <link rel="stylesheet" href="assets/css/rt-plugins.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <!-- END: Theme CSS -->
+
+  <script src="assets/js/settings.js"></script>
+
+  <style>
+    /* Fundo preto */
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Card */
+    .card {
+      background-color: #111;
+      border: 2px solid #B00000;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(225, 6, 0, 0.4);
+    }
+
+    /* Título do card */
+    .card-title {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #B00000;
+    }
+
+    .card-title img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 10px;
+      border: 2px solid #B00000;
+    }
+
+    /* Mensagens */
+    .message {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      color: #FF2A1F;
+    }
+
+    .success {
+      color: #FF4D40;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #111 !important;
+      color: #bbb !important;
+    }
+
+    /* Inputs */
+    .form-control {
+      background-color: #000;
+      border: 1px solid #B00000;
+      color: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #B00000;
+      box-shadow: 0 0 8px rgba(225, 6, 0, 0.6);
+    }
+
+    .form-label {
+      color: #B00000;
+      font-weight: 600;
+    }
+
+    /* Botão estilizado */
+    .btn-dark {
+      background-color: #B00000;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-dark:hover {
+      background-color: #FF2A1F;
+      box-shadow: 0 0 10px rgba(225, 6, 0, 0.6);
+    }
+
+    /* Breadcrumb */
+    .breadcrumb a {
+      color: #B00000;
+    }
+
+    .breadcrumb li {
+      color: #fff;
+    }
+
+    /* Wrapper Content */
+    .content-wrapper {
+      background-color: #000;
+    }
+  </style>
+</head>
+
+<body class="font-inter dashcode-app" id="body_class">
+  <main class="app-wrapper">
+    <div class="flex flex-col justify-between min-h-screen">
+      <div>
+
+        <!-- Header -->
+        <div class="z-[9]" id="app_header">
+          <div class="app-header z-[999] ltr:ml-[248px] rtl:mr-[248px] bg-black shadow-sm">
+            <div class="flex justify-between items-center h-full">
+              <div class="flex items-center md:space-x-4 space-x-2 xl:space-x-0 rtl:space-x-reverse">
+                <a href="/docs" class="mobile-logo xl:hidden inline-block"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper transition-all duration-150 ltr:ml-[248px] rtl:mr-[248px]" id="content_wrapper">
+          <div class="page-content">
+            <div class="transition-all duration-150 container-fluid" id="page_layout">
+              <div id="content_layout">
+
+                <!-- Breadcrumb -->
+                <div class="mb-5 breadcrumb">
+                  <ul class="m-0 p-0 list-none">
+                    <li class="inline-block text-base text-red-400">
+                      <a href="index.html">
+                        <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                        <iconify-icon icon="heroicons-outline:chevron-right"
+                          class="text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                      </a>
+                    </li>
+                    <li class="inline-block text-sm text-red-400">Docs
+                      <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="text-slate-500 rtl:rotate-180"></iconify-icon>
+                    </li>
+                    <li class="inline-block text-sm text-white">Configurações administrativas</li>
+                  </ul>
+                </div>
+                <!-- END: Breadcrumb -->
+
+                <div class="grid xl:grid-cols-2 grid-cols-1 gap-6">
+                  <div class="card">
+                    <div class="card-body flex flex-col p-6">
+                      <header class="flex mb-5 items-center border-b border-red-400 pb-5">
+                        <div class="flex-1">
+                          <div class="card-title">
+                            <img src="<%= fotoApi %>" alt="Logo">
+                            Adms DFS TECH API
+                          </div>
+                        </div>
+                      </header>
+
+                      <!-- Mensagens -->
+                      <div class="message error" id="error-message" style="display: none;"></div>
+                      <div class="message success" id="success-message" style="display: none;"></div>
+
+                      <div class="card-text h-full">
+                        <form class="space-y-4" id="configForm">
+                          <input type="hidden" name="token" value="<%= apikey %>">
+                          <div class="input-area">
+                            <label class="form-label">Usuário</label>
+                            <input type="text" class="form-control" name="nome" placeholder="Nome do usuário" required
+                              aria-required="true">
+                          </div>
+                          <div class="input-area">
+                            <label class="form-label">Request</label>
+                            <input type="text" class="form-control" name="request"
+                              placeholder="Novas requests do usuário">
+                          </div>
+                          <div class="input-area">
+                            <label class="form-label">Level</label>
+                            <input type="text" class="form-control" name="level" placeholder="Novo Level">
+                          </div>
+                          <div class="input-area">
+                            <label class="form-label">Foto</label>
+                            <input type="text" class="form-control" name="foto" placeholder="Url da imagem">
+                          </div>
+                          <div class="input-area">
+                            <label class="form-label">Administrador</label>
+                            <input type="text" class="form-control" name="adm" placeholder="true / false">
+                          </div>
+                          <div class="input-area">
+                            <label class="form-label">VIP</label>
+                            <input type="text" class="form-control" name="vip" placeholder="true / false">
+                          </div>
+                          <div class="input-area">
+                            <label class="form-label">Ilimitado</label>
+                            <input type="text" class="form-control" name="ilimitado" placeholder="true / false">
+                          </div>
+                          <div class="input-area">
+                            <label class="form-label">ApiKey</label>
+                            <input type="text" class="form-control" name="apikey" placeholder="Sua apikey personalizada">
+                          </div>
+                          <center>
+                            <button class="btn-dark">Salvar</button>
+                          </center>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="md:block hidden" id="footer">
+          <div class="site-footer px-6 py-4">
+            <div class="text-center text-sm">
+              COPYRIGHT © <span id="thisYear"></span> <%= nomeApi %> - todos direitos reservados
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    document.getElementById('thisYear').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('configForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const rawData = Object.fromEntries(new FormData(form));
+      const data = {};
+      const parseBoolean = (value) => {
+        if (typeof value !== 'string') return value;
+        const v = value.trim().toLowerCase();
+        if (v === 'true' || v === '1' || v === 'sim' || v === 'yes') return true;
+        if (v === 'false' || v === '0' || v === 'nao' || v === 'não' || v === 'no') return false;
+        return value;
+      };
+      Object.entries(rawData).forEach(([key, value]) => {
+        if (typeof value === 'string' && value.trim() === '') return;
+        if (key === 'request') {
+          const num = Number(value);
+          if (!Number.isNaN(num)) {
+            data[key] = num;
+            return;
+          }
+        }
+        if (key === 'adm' || key === 'vip' || key === 'ilimitado') {
+          data[key] = parseBoolean(value);
+          return;
+        }
+        data[key] = value;
+      });
+
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+
+      const hasChangeField = Object.keys(data).some((k) => k !== 'nome' && k !== 'token');
+      if (!hasChangeField) {
+        errorMessage.textContent = 'Informe ao menos 1 campo para alterar (request, level, foto, adm, vip, ilimitado ou apikey).';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      try {
+        const response = await fetch('/configuracaoAdm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        if (!response.ok || result.error) {
+          errorMessage.textContent = result.error || result.details || `Erro HTTP ${response.status}`;
+          errorMessage.style.display = 'block';
+        } else {
+          successMessage.textContent = result.message || 'Configurações salvas com sucesso!';
+          successMessage.style.display = 'block';
+        }
+      } catch (err) {
+        errorMessage.textContent = `Erro ao salvar as configurações: ${err.message}`;
+        errorMessage.style.display = 'block';
+      }
+    });
+  </script>
+
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/rt-plugins.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+
+</html>

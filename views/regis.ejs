@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DFS TECH API - Registro</title>
+  <link rel="icon" href="https://files.catbox.moe/w6l8pf.jpg">
+  <link rel="stylesheet" href="/assets/css/dfs-standard.css">
+  <style>
+    body { margin:0; color:#fff; font-family:Segoe UI, sans-serif; }
+    .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px; }
+    .card { width:min(420px, 100%); background:rgba(0,0,0,0.78); border:1px solid #B00000; border-radius:12px; padding:18px; }
+    h1 { margin:0 0 12px; color:#E10600; font-size:24px; }
+    input { width:100%; margin:7px 0; padding:10px; border-radius:8px; border:1px solid #333; background:#111; color:#fff; }
+    button { width:100%; margin-top:10px; padding:11px; border:0; border-radius:8px; background:#E10600; color:#fff; font-weight:700; cursor:pointer; }
+    .muted { margin-top:10px; font-size:13px; color:#bbb; text-align:center; }
+    a { color:#FF4D40; }
+    #msg { margin-top:10px; font-size:13px; }
+  </style>
+</head>
+<body>
+  <canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="card">
+      <h1>Criar conta</h1>
+      <form id="regForm">
+        <input id="username" placeholder="Username" required>
+        <input id="nick" placeholder="Nome exibido" required>
+        <input id="email" type="email" placeholder="Email (opcional)">
+        <input id="password" type="password" placeholder="Senha" required>
+        <button type="submit">Registrar</button>
+      </form>
+      <div id="msg"></div>
+      <div class="muted">Já tem conta? <a href="/login">Entrar</a></div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = {
+        username: document.getElementById('username').value.trim(),
+        nick: document.getElementById('nick').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value
+      };
+      const msg = document.getElementById('msg');
+      try {
+        const r = await fetch('/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await r.json();
+        msg.textContent = data.message || 'Resposta recebida';
+        msg.style.color = data.success ? '#7CFF8A' : '#FF7A70';
+        if (data.success) setTimeout(() => location.href = '/login', 900);
+      } catch {
+        msg.textContent = 'Falha no registro';
+        msg.style.color = '#FF7A70';
+      }
+    });
+  </script>
+  <script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DFS TECH API - Anime Images</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden;
+  background: #000;
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #B00000;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+h1 img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+p {
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  background: linear-gradient(45deg, #B00000, #FF4D40);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #FF4D40, #B00000);
+}
+
+#resposta {
+  margin-top: 20px;
+  white-space: pre-wrap;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#imagem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#imagem img {
+  width: 100%;
+  max-width: 600px;
+  max-height: 80vh;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  border: 2px solid #B00000;
+  object-fit: contain;
+}
+
+#imagem img:hover {
+  transform: scale(1.05);
+}
+
+.download-instruction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: #FF2A1F;
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+
+.download-instruction svg {
+  width: 20px;
+  height: 20px;
+  fill: #B00000;
+}
+
+.particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #B00000;
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: float 10s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+  50% { transform: translateY(-500px) translateX(100px); opacity: 0.3; }
+  100% { transform: translateY(-1000px) translateX(-100px); opacity: 0; }
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #B00000;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body>
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<h1>
+  <img src="https://files.catbox.moe/w6l8pf.jpg" alt="Ícone">
+  DFS TECH API
+</h1>
+
+<p>
+  <svg width="16" height="16" fill="#B00000" viewBox="0 0 24 24">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.83.48-5.45-1.27-6.31-4.03-.21-.7-.31-1.43-.31-2.2 0-.77.1-1.5.31-2.2.86-2.76 3.48-4.51 6.31-4.03 2.83.48 5.05 2.59 5.05 5.29s-2.22 4.81-5.05 5.29z"/>
+  </svg>
+  Gerar imagens aleatórias de anime
+</p>
+
+<button id="gerarImagem">
+  <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+    <path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z"/>
+  </svg>
+  Gerar Imagem Anime
+</button>
+
+<div id="resposta"></div>
+<div id="imagem"></div>
+
+<script>
+const btnImagem = document.getElementById('gerarImagem');
+const resposta = document.getElementById('resposta');
+const imagem = document.getElementById('imagem');
+
+btnImagem.addEventListener('click', async () => {
+  resposta.innerHTML = '<div class="spinner"></div> Gerando imagem...';
+  imagem.innerHTML = "";
+  try {
+    const res = await fetch("https://api.waifu.pics/sfw/waifu");
+    const data = await res.json();
+    const url = data.url;
+
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = "Imagem de anime";
+    imagem.appendChild(img);
+
+    const instruction = document.createElement('div');
+    instruction.className = 'download-instruction';
+    instruction.innerHTML = `
+      <svg viewBox="0 0 24 24">
+        <path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z"/>
+      </svg>
+      Segure na imagem para fazer o download
+    `;
+    imagem.appendChild(instruction);
+
+    resposta.innerHTML = `
+      <svg width="16" height="16" fill="#B00000" viewBox="0 0 24 24">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+      Imagem gerada com sucesso!
+    `;
+  } catch(err) {
+    resposta.textContent = "Erro ao gerar imagem: " + err.message;
+  }
+});
+
+function criarParticulas(num) {
+  for(let i = 0; i < num; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    p.style.left = Math.random() * window.innerWidth + 'px';
+    p.style.top = Math.random() * window.innerHeight + 'px';
+    p.style.width = (Math.random() * 4 + 2) + 'px';
+    p.style.height = (Math.random() * 4 + 2) + 'px';
+    p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    document.body.appendChild(p);
+  }
+}
+criarParticulas(100);
+</script>
+
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

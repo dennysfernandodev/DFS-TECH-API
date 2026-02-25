@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Laboratório DFS TECH</title>
+
+<!-- FAVICONS -->
+<link rel="icon" type="image/png" sizes="32x32" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="apple-touch-icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="shortcut icon" href="https://files.catbox.moe/w6l8pf.jpg">
+
+<!-- Font Awesome e Google Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+:root {
+  --primary-gradient: linear-gradient(135deg,#B00000,#E10600);
+  --secondary: #ffffff;
+  --dark: #000000;
+  --light-gray: rgba(0,0,0,0.6);
+  --text: #ffffff;
+  --bg: linear-gradient(to bottom, #003333, #000000);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html, body {width:100%;min-height:100vh;font-family:'Poppins',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;transition:all 0.3s ease;}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 15px;}
+.btn{display:block;width:100%;max-width:280px;margin:10px auto;padding:14px 28px;border-radius:10px;font-weight:600;text-align:center;transition:all 0.3s ease;cursor:pointer;font-size:1.1rem;position:relative;overflow:hidden;}
+.btn-primary{background: var(--primary-gradient); color: var(--secondary); border: 2px solid #00ffff; font-weight:600;}
+.btn-primary:hover{opacity:0.9;}
+.main-header{position:fixed;top:0;left:0;width:100%;background-color:rgba(0,0,0,0.9);box-shadow:0 2px 20px rgba(0,0,0,0.5);z-index:1000;padding:15px 0;}
+.navbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{width:40px;height:40px;}
+.logo h1{font-size:1.3rem;font-weight:600;background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.nav-menu{display:flex;gap:15px;align-items:center;list-style:none;margin:10px 0 0 0;padding:0;flex-wrap:wrap;}
+.nav-menu li{display:inline-block;}
+.nav-menu a{font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px;font-size:0.95rem;}
+.nav-menu a:hover{color:#00ffff;}
+.hero-section{width:100%;padding:120px 20px 50px;position:relative;z-index:1;background:transparent;}
+.hero-text{text-align:center;max-width:95%;margin:0 auto;line-height:1.6;}
+.hero-text h1{font-size:clamp(1.8rem,6vw,3rem);font-weight:700;background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;margin-bottom:15px;line-height:1.2;}
+.lead{font-size:clamp(1rem,4vw,1.2rem);color:#ccc;margin-bottom:20px;line-height:1.6;}
+.section{padding:60px 20px;}
+.section h2{font-size:clamp(1.5rem,5vw,2rem);background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;margin-bottom:30px;text-align:center;}
+.card{background: rgba(0,0,0,0.6);border:1px solid #00ffff;border-radius:15px;padding:20px;margin-bottom:20px;box-shadow:0 0 15px rgba(0,255,255,0.4);transition:all 0.3s ease;overflow-wrap: break-word; word-break: break-word;}
+.card:hover{transform:translateY(-5px);box-shadow:0 0 20px rgba(0,255,255,0.7);}
+.card h3{font-size:1.2rem;color:var(--secondary);margin-bottom:10px;}
+.card p{font-size:0.95rem;color:#ccc;line-height:1.5;margin-bottom:10px;}
+.card a{color:#00ffff;font-weight:500;display:block;margin-top:8px;overflow-wrap: break-word; word-break: break-word; text-decoration:none;}
+.card a:hover{color:#ffffff;}
+.main-footer{background-color:var(--dark);color:var(--secondary);padding:40px 0 20px;position:relative;z-index:2;text-align:center;}
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body translate="no">
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<canvas id="bgCanvas"></canvas>
+
+<header class="main-header">
+  <div class="container">
+    <nav class="navbar">
+      <a href="/" class="logo" translate="no">
+        <img src="https://files.catbox.moe/w6l8pf.jpg" alt="DFS TECH Lab">
+        <h1 translate="no">Laboratório DFS TECH</h1>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#sobre"><i class="fa-solid fa-info-circle"></i> Sobre</a></li>
+        <li><a href="#regras"><i class="fa-solid fa-shield-alt"></i> Regras</a></li>
+        <li><a href="#links"><i class="fa-solid fa-link"></i> Links</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero-section" id="sobre">
+  <div class="container">
+    <div class="hero-text" data-aos="fade-up">
+      <h1>🤖 Laboratório DFS TECH</h1>
+      <p class="lead">Espaço exclusivo para testes, desenvolvimento e demonstrações de bots.<br>
+      Destinado a criadores que desejam aprimorar funcionalidades em ambiente seguro.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="regras">
+  <div class="container">
+    <h2>🚫 Regras do Laboratório</h2>
+    <div class="card" data-aos="fade-up">
+      <p>• Proibido qualquer tipo de pornografia</p>
+      <p>• Proibido divulgar links de terceiros</p>
+      <p>• Não é permitido usar bots com prefixo igual ao oficial</p>
+      <p>⚙️ Ambiente controlado para criadores e testadores de bots.</p>
+      <p>Respeite as regras para manter o laboratório ativo e organizado.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="links">
+  <div class="container">
+    <h2>🔗 Links Importantes</h2>
+    <div class="card" data-aos="fade-up">
+      <h3>Base Delta 1</h3>
+      <a href="https://github.com/toshblackout/Base-Delta" target="_blank"><i class="fa-solid fa-folder"></i> Abrir repositório</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>Base Delta 2</h3>
+      <a href="https://github.com/toshblackout/Base-DeltaMatrix.git" target="_blank"><i class="fa-solid fa-folder"></i> Abrir repositório</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>Pack DFS TECH</h3>
+      <a href="https://github.com/toshblackout/Packblackout_1" target="_blank"><i class="fa-solid fa-folder"></i> Abrir repositório</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>Baillys Tosh</h3>
+      <a href="https://github.com/toshblackout/BailleysTosh" target="_blank"><i class="fa-solid fa-folder"></i> Abrir repositório</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>DFS TECH HOSTING</h3>
+      <a href="https://hosting.dfstech.sbs/" target="_blank"><i class="fa-solid fa-server"></i> https://hosting.dfstech.sbs/</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>DFS TECH API</h3>
+      <a href="https://api.dfstech.sbs" target="_blank"><i class="fa-solid fa-code"></i> https://api.dfstech.sbs</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>Canal YouTube</h3>
+      <a href="https://www.youtube.com/@ToshBlakout2" target="_blank"><i class="fa-brands fa-youtube"></i> Canal YouTube</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>DFS TECH Canal</h3>
+      <a href="https://whatsapp.com/channel/0029Vb6iKLhDp2QIh64HGk1t" target="_blank"><i class="fa-brands fa-whatsapp"></i> https://whatsapp.com/channel/0029Vb6iKLhDp2QIh64HGk1t</a>
+    </div>
+    <div class="card" data-aos="fade-up">
+      <h3>Fast⚡Host Canal</h3>
+      <a href="https://whatsapp.com/channel/0029VazmYZk72WTne" target="_blank"><i class="fa-brands fa-whatsapp"></i> https://whatsapp.com/channel/0029VazmYZk72WTne</a>
+    </div>
+  </div>
+</section>
+
+<footer class="main-footer">
+  <p>&copy; 2026 Laboratório DFS TECH. Todos os direitos reservados.</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  AOS.init();
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  const resizeCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  
+  const particles = [];
+  const particleCount = 80;
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: 3 + Math.random() * 3, color: `rgba(0,255,255,${0.6 + Math.random() * 0.4})` });
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(0,0,0,0.6)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    for (let p of particles) {
+      ctx.beginPath();ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);ctx.fillStyle = p.color;ctx.fill();
+    }
+    
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120){ ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(particles[j].x, particles[j].y);ctx.strokeStyle = `rgba(0,255,255,0.3)`;ctx.stroke(); }
+      }
+    }
+    
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > canvas.width) p.vx*=-1;
+      if(p.y < 0 || p.y > canvas.height) p.vy*=-1;
+    }
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+});
+</script>
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

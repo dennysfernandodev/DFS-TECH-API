@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>DFS TECH</title>
+
+<!-- FAVICONS -->
+<link rel="icon" type="image/png" sizes="32x32" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="apple-touch-icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="shortcut icon" href="https://files.catbox.moe/w6l8pf.jpg">
+
+<!-- Font Awesome e Google Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+:root {
+  --primary-700: #B00000;
+  --primary-600: #C40000;
+  --primary-500: #E10600;
+  --primary-400: #FF2A1F;
+  --primary-300: #FF4D40;
+  --primary-200: #FF7A70;
+  --primary-100: #FFD2CF;
+
+  --primary: #E10600;
+  --secondary: #ffffff;
+  --dark: #000000;
+  --light-gray: rgba(0,0,0,0.6);
+  --text: #ffffff;
+  --bg: rgba(0,0,0,0.6);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html, body {width:100%;min-height:100vh;font-family:'Poppins',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;transition:all 0.3s ease;}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 15px;}
+.btn{display:block;width:100%;max-width:280px;margin:10px auto;padding:14px 28px;border-radius:10px;font-weight:600;text-align:center;transition:all 0.3s ease;cursor:pointer;font-size:1.1rem;position:relative;overflow:hidden;}
+.btn-primary{background-color:var(--primary);color:var(--secondary);border:2px solid var(--primary);}
+.btn-primary:hover{background-color:#C40000;border-color:#C40000;}
+.btn-outline{background-color:transparent;color:var(--primary);border:2px solid var(--primary);}
+.btn-outline:hover{background-color:var(--primary);color:var(--secondary);}
+.main-header{position:fixed;top:0;left:0;width:100%;background-color:rgba(0,0,0,0.9);box-shadow:0 2px 20px rgba(0,0,0,0.5);z-index:1000;padding:15px 0;}
+.navbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{width:40px;height:40px;}
+.logo h1{font-size:1.3rem;font-weight:600;color:var(--primary);}
+.nav-menu{display:flex;gap:15px;align-items:center;list-style:none;margin:10px 0 0 0;padding:0;flex-wrap:wrap;}
+.nav-menu li{display:inline-block;}
+.nav-menu a{font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px;font-size:0.95rem;}
+.nav-menu a:hover{color:var(--primary);}
+.login-btn{margin-left:10px;}
+.hero-section{width:100%;padding:120px 20px 50px;position:relative;z-index:1;background:transparent;}
+.hero-text{text-align:center;max-width:95%;margin:0 auto;line-height:1.6;}
+.hero-text h1{font-size:clamp(1.8rem,6vw,3rem);font-weight:700;color:var(--primary);margin-bottom:15px;line-height:1.2;}
+.lead{font-size:clamp(1rem,4vw,1.2rem);color:#ccc;margin-bottom:20px;line-height:1.6;}
+.main-footer{background-color:var(--dark);color:var(--secondary);padding:40px 0 20px;position:relative;z-index:2;}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;margin-bottom:30px;}
+.footer-title{font-size:1rem;font-weight:600;margin-bottom:15px;color:var(--primary);}
+.footer-links a{color:#ccc;}
+.footer-links a:hover{color:var(--secondary);}
+.footer-bottom{border-top:1px solid var(--light-gray);text-align:center;padding-top:15px;color:#ccc;}
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+
+/* PLANOS */
+.plans-section{padding:80px 20px 50px;text-align:center;background:transparent;}
+.plans-section h2{font-size:clamp(1.8rem,6vw,2.5rem);color:var(--primary);margin-bottom:40px;}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.plan-card{background: var(--light-gray); padding:20px;border-radius:15px;box-shadow:0 0 15px rgba(225, 6, 0,0.35);transition:all 0.3s ease;}
+.plan-card:hover{transform:scale(1.05);}
+.plan-card h3{font-size:1.3rem;color:var(--secondary);margin-bottom:10px;}
+.plan-card p{color:#ccc;margin-bottom:20px;font-size:0.95rem;line-height:1.4;}
+.plan-card .price{font-size:1.8rem;color:var(--primary);font-weight:700;margin-bottom:15px;}
+
+/* MARKETING INTERATIVO */
+.marketing-section{padding:60px 20px;text-align:center;}
+.marketing-section h2{font-size:clamp(1.8rem,6vw,2.5rem);color:var(--primary);margin-bottom:30px;}
+.marketing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.marketing-card{background:rgba(0,0,0,0.6);border:1px solid var(--primary);border-radius:15px;padding:20px;color:var(--secondary);box-shadow:0 0 15px rgba(225, 6, 0,0.45);transition:all 0.4s ease;text-align:center;}
+.marketing-card:hover{transform:translateY(-6px);box-shadow:0 0 20px rgba(225, 6, 0,0.8);}
+.marketing-card i{font-size:1.8rem;color:var(--primary);margin-bottom:12px;}
+.marketing-card h3{font-size:1.2rem;margin-bottom:8px;color:var(--secondary);}
+.marketing-card p{font-size:0.95rem;color:#ccc;line-height:1.4;}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body translate="no">
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<canvas id="bgCanvas"></canvas>
+
+<header class="main-header">
+  <div class="container">
+    <nav class="navbar">
+      <a href="/" class="logo" translate="no">
+        <img src="https://files.catbox.moe/w6l8pf.jpg" alt="DFS TECH API">
+        <h1 translate="no">DFS TECH API</h1>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="/planos"><i class="fa-solid fa-list"></i> Planos</a></li>
+        <li><a href="https://animefire.plus"><i class="fa-solid fa-globe"></i> Anime Fire</a></li>
+        <li><a href="/login.html" class="btn btn-outline login-btn"><i class="fa-solid fa-right-to-bracket"></i> Login</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-text" data-aos="fade-up">
+      <h1>Nossos Planos</h1>
+      <p class="lead">Escolha o plano ideal para a sua API DFS TECH. Tenha suporte, estabilidade e velocidade garantidos!</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section class="plans-section">
+  <div class="container">
+    <h2>Planos Disponíveis</h2>
+    <div class="plans-grid">
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Start</h3>
+        <p>Ideal para começar. Inclui <strong>+1.000 requests</strong></p>
+        <div class="price">R$10</div>
+        <button class="btn btn-primary btn-plan" data-plan-id="starter_10">Comprar</button>
+      </div>
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Básico</h3>
+        <p>Mais requisições e estabilidade. Inclui <strong>+5.000 requests</strong></p>
+        <div class="price">R$25</div>
+        <button class="btn btn-primary btn-plan" data-plan-id="basic_25">Comprar</button>
+      </div>
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Pro</h3>
+        <p>Alta performance para projetos maiores. Inclui <strong>+12.000 requests</strong></p>
+        <div class="price">R$50</div>
+        <button class="btn btn-primary btn-plan" data-plan-id="pro_50">Comprar</button>
+      </div>
+      <div class="plan-card" data-aos="fade-up">
+        <h3>Plano Elite</h3>
+        <p>Pacote avançado para uso intenso. Inclui <strong>+30.000 requests</strong></p>
+        <div class="price">R$100</div>
+        <button class="btn btn-primary btn-plan" data-plan-id="elite_100">Comprar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETING -->
+<section class="marketing-section">
+  <div class="container">
+    <h2>DFS TECH API te oferece</h2>
+    <div class="marketing-grid">
+      <div class="marketing-card" data-aos="fade-right">
+        <i class="fa-solid fa-download"></i>
+        <h3>Downloads</h3>
+        <p>Play áudio, play vídeo, pesquisas e muito mais!</p>
+      </div>
+      <div class="marketing-card" data-aos="fade-up">
+        <i class="fa-solid fa-face-smile"></i>
+        <h3>Figurinhas</h3>
+        <p>Criação de figurinhas de animes, desenhos, emojis e muito mais!</p>
+      </div>
+      <div class="marketing-card" data-aos="fade-left">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <h3>Edits</h3>
+        <p>Efeitos para animes como Naruto, Jujutsu Kaisen, Free Fire e outros!</p>
+      </div>
+      <div class="marketing-card" data-aos="fade-right">
+        <i class="fa-solid fa-palette"></i>
+        <h3>Canvas</h3>
+        <p>Cards personalizados, boas-vindas, cards de música e efeitos visuais.</p>
+      </div>
+      <div class="marketing-card" data-aos="fade-up">
+        <i class="fa-solid fa-fire-flame-curved"></i>
+        <h3>+18</h3>
+        <p>Conteúdos exclusivos como vídeos, plaquinhas, imagens e muito mais.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="main-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo">
+          <img src="https://files.catbox.moe/w6l8pf.jpg" alt="DFS TECH API">
+          <h1>Tosh DFS TECH</h1>
+        </div>
+        <p>
+Olá, pessoal! Bem-vindos à DFS TECH API, a plataforma completa para você explorar recursos de áudio, vídeo, figurinhas e muito mais!  
+Aqui você encontra planos que se adaptam a qualquer necessidade, desde projetos pequenos até usos profissionais. Ao escolher um plano, você terá acesso direto a suporte, estabilidade e alta performance para integrar a API nos seus projetos.  
+
+Não perca a chance de fazer parte do nosso grupo oficial no WhatsApp, onde você recebe novidades, dicas, atualizações e pode interagir diretamente com a equipe da DFS TECH API.  
+
+Explore o site, conheça nossos planos e funcionalidades, e aproveite tudo que a DFS TECH API tem a oferecer. Sempre evoluindo, trazendo novidades e facilitando a sua experiência. Seja bem-vindo(a) à DFS TECH!
+        </p>
+      </div>
+      <div class="footer-links">
+        <h3 class="footer-title">Comunidade</h3>
+        <ul>
+          <li><a href="https://chat.whatsapp.com/EXI0YNLuVePI2nIVQr9xS8"><i class="fa-brands fa-whatsapp"></i> DFS TECH API</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 DFS TECH API. Todos os direitos reservados. Tosh DFS TECH </p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  AOS.init();
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  const resizeCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  const particles = [];
+  const particleCount = 80;
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: 3 + Math.random() * 3, color: `rgba(225, 6, 0,${0.6 + Math.random() * 0.4})` });
+  }
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(0,0,0,0.6)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let p of particles) {
+      ctx.beginPath();ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);ctx.fillStyle = p.color;ctx.fill();
+    }
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120){ ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(particles[j].x, particles[j].y);ctx.strokeStyle = `rgba(225, 6, 0,0.3)`;ctx.stroke(); }
+      }
+    }
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > canvas.width) p.vx*=-1;
+      if(p.y < 0 || p.y > canvas.height) p.vy*=-1;
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  async function startCheckout(planId) {
+    let apiKey = new URLSearchParams(window.location.search).get("apikey") || localStorage.getItem("dfs_api_key") || "";
+    if (!apiKey) {
+      apiKey = window.prompt("Informe sua API Key para comprar o plano:");
+    }
+
+    if (!apiKey || !apiKey.trim()) {
+      alert("API Key obrigatória para iniciar a compra.");
+      return;
+    }
+
+    apiKey = apiKey.trim();
+    localStorage.setItem("dfs_api_key", apiKey);
+
+    try {
+      const response = await fetch("/api/billing/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey
+        },
+        body: JSON.stringify({ planId })
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload?.success || !payload?.data?.init_point) {
+        throw new Error(payload?.message || "Falha ao gerar checkout");
+      }
+      window.location.href = payload.data.init_point;
+    } catch (err) {
+      alert(`Erro ao iniciar pagamento: ${err.message}`);
+    }
+  }
+
+  document.querySelectorAll(".btn-plan").forEach((button) => {
+    button.addEventListener("click", () => startCheckout(button.dataset.planId));
+  });
+});
+</script>
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

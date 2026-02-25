@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DFS TECH API - JSON Viewer</title>
+<link rel="icon" href="https://files.catbox.moe/w6l8pf.jpg" sizes="32x32">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary-700: #B00000;
+  --primary-600: #C40000;
+  --primary-500: #E10600;
+  --primary-400: #FF2A1F;
+  --primary-300: #FF4D40;
+  --primary-200: #FF7A70;
+  --primary-100: #FFD2CF;
+
+  --primary: #E10600;
+  --secondary:#ffffff;
+  --bg:rgba(0,0,0,0.7);
+  --gray:#ccc;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;font-family:'Poppins',sans-serif;color:var(--secondary);background:var(--bg);}
+body{display:flex;flex-direction:column;min-height:100vh;}
+
+/* Header */
+.main-header{width:100%;background:rgba(0,0,0,0.9);padding:10px 0;position:fixed;top:0;z-index:1000;}
+.navbar{display:flex;justify-content:flex-start;align-items:center;max-width:1200px;margin:0 auto;padding:0 15px;}
+.logo img{width:50px;height:50px;}
+.logo h1{color:var(--primary);font-size:1.5rem;margin-left:15px;animation:slideFade 0.6s ease forwards;}
+
+/* Main content */
+.main-content{flex:1;display:flex;justify-content:center;align-items:flex-start;padding-top:75px;padding-bottom:50px;}
+.hero-section{width:90%;max-width:900px;text-align:center;}
+.hero-section h1{font-size:clamp(1.8rem,5vw,2.5rem);color:var(--primary);margin-bottom:10px;animation:slideFade 0.6s ease forwards;}
+.hero-section p{color:var(--gray);margin-bottom:20px;animation:fadeIn 1s ease forwards;}
+
+/* Animated titles */
+@keyframes slideFade{
+  0%{opacity:0;transform:translateX(-20px);}
+  100%{opacity:1;transform:translateX(0);}
+}
+@keyframes fadeIn{
+  0%{opacity:0;}
+  100%{opacity:1;}
+}
+
+/* SVG icons for titles */
+.icon{width:20px;height:20px;fill:#fff;}
+
+/* Error card */
+.error-card{background:rgba(225, 6, 0,0.1);border:1px solid var(--primary);padding:15px;margin:0 auto;border-radius:8px;text-align:left;}
+.error-card h2{
+  color:var(--primary);
+  margin-bottom:5px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  animation:slideFade 0.6s ease forwards;
+}
+.error-card pre{background:#111;color:#fff;padding:12px;border-radius:5px;overflow-x:auto;max-height:400px;white-space:pre-wrap;word-wrap:break-word;animation:fadeIn 0.8s ease forwards;}
+
+/* Botão copiar */
+.copy-btn{
+  display:inline-block;
+  margin:10px 0;
+  padding:8px 12px;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:600;
+  transition:transform 0.2s;
+}
+.copy-btn:hover{transform:scale(1.05);}
+
+/* Footer */
+.main-footer{text-align:center;color:var(--gray);padding:10px 0;background:rgba(0,0,0,0.8);font-size:0.9rem;}
+
+/* Canvas */
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+
+/* Notificação de cópia */
+.copy-notification{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  background:rgba(0,0,0,0.9);
+  color:#fff;
+  padding:12px 15px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  opacity:0;
+  transform:translateY(50px);
+  pointer-events:none;
+  transition:opacity 0.5s, transform 0.5s;
+  z-index:9999;
+}
+.copy-notification.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.copy-notification img{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+}
+.copy-notification span{
+  font-weight:600;
+  animation:fadeIn 0.5s ease forwards;
+}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body>
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<canvas id="bgCanvas"></canvas>
+
+<header class="main-header">
+  <nav class="navbar logo">
+    <img src="https://files.catbox.moe/w6l8pf.jpg" alt="Logo">
+    <h1>DFS TECH API</h1>
+  </nav>
+</header>
+
+<main class="main-content">
+  <section class="hero-section">
+    <h1>Rota <span id="rota"></span></h1>
+    <p>Detalhada para captura de erros</p>
+
+    <div class="error-card">
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2z"/></svg>
+        Mensagem:
+      </h2>
+      <pre id="mensagem"></pre>
+
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 3h18v2H3z"/></svg>
+        Detalhes:
+      </h2>
+      <pre id="detalhes"></pre>
+
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 0a12 12 0 1012 12A12 12 0 0012 0zm1 17h-2v-2h2zm0-4h-2V7h2z"/></svg>
+        Stack Trace:
+      </h2>
+      <pre id="stack"></pre>
+
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>
+        Resultado Completo:
+      </h2>
+      <button class="copy-btn" onclick="copyJSON()">Copiar código</button>
+      <pre id="jsonRaw"></pre>
+    </div>
+  </section>
+</main>
+
+<footer class="main-footer">
+  &copy; 2025 DFS TECH API - Tosh DFS TECH
+</footer>
+
+<!-- Notificação -->
+<div id="copyNotification" class="copy-notification">
+  <img src="https://i.imgur.com/gfSPmDU.jpeg" alt="Tosh DFS TECH">
+  <span>Código copiado! <strong>Tosh DFS TECH</strong></span>
+</div>
+
+<script id="inject-error"></script>
+<script>
+const errorData = window.__ERROR__ || {};
+const rota = errorData.rota || "N/A";
+const mensagem = errorData.mensagem || "N/A";
+const detalhes = errorData.detalhes || "N/A";
+const stack = errorData.stack || "N/A";
+const resultado = errorData.resultado || {};
+
+document.getElementById('rota').textContent = rota;
+document.getElementById('mensagem').textContent = mensagem;
+document.getElementById('detalhes').textContent = detalhes;
+document.getElementById('stack').textContent = stack;
+document.getElementById('jsonRaw').textContent = JSON.stringify(resultado, null, 2);
+
+function copyJSON(){
+    const fullError = { rota, mensagem, detalhes, stack, resultado };
+    navigator.clipboard.writeText(JSON.stringify(fullError, null, 2))
+        .then(()=>showCopyNotification())
+        .catch(err=>alert('Erro ao copiar: '+err));
+}
+
+function showCopyNotification(){
+    const notif = document.getElementById('copyNotification');
+    notif.classList.add('show');
+    setTimeout(()=>{notif.classList.remove('show');},3000);
+}
+
+// Canvas animado
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resize(); window.addEventListener('resize', resize);
+
+const particles=[];
+for(let i=0;i<150;i++){
+  particles.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    vx:(Math.random()-0.5)*2,
+    vy:(Math.random()-0.5)*2,
+    radius:Math.random()*4+2,
+    alpha:Math.random()*0.8+0.2,
+    pulseDir:Math.random()>0.5?1:-1
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='rgba(0,0,0,0.7)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  for(let p of particles){
+    p.alpha+=0.02*p.pulseDir;
+    if(p.alpha>=1||p.alpha<=0.2)p.pulseDir*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+    ctx.fillStyle=`rgba(225, 6, 0,${p.alpha})`;
+    ctx.fill();
+  }
+
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<160){
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.strokeStyle=`rgba(225, 6, 0,${(1-dist/160)*0.6})`;
+        ctx.lineWidth=1.3;
+        ctx.stroke();
+      }
+    }
+  }
+
+  for(let p of particles){
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0||p.x>canvas.width)p.vx*=-1;
+    if(p.y<0||p.y>canvas.height)p.vy*=-1;
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

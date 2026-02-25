@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DFS TECH API - Login e Registro</title>
+<meta name="description" content="DFS TECH API">
+
+<link rel="icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="apple-touch-icon" href="https://files.catbox.moe/w6l8pf.jpg">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+min-height:100vh;
+font-family:'Poppins',sans-serif;
+color:#fff;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding:20px 10px;
+position:relative;
+overflow:hidden;
+}
+.bg-particles{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+pointer-events:none;
+}
+.content{width:100%;max-width:420px;position:relative;z-index:2}
+.container{
+width:100%;
+border-radius:20px;
+padding:25px 20px;
+text-align:center;
+background:rgba(0,0,0,.85);
+box-shadow:0 10px 30px rgba(0,0,0,.5)
+}
+.container img{
+width:100px;height:100px;border-radius:50%;
+margin-bottom:15px;object-fit:cover;
+border:3px solid rgba(225, 6, 0,.7)
+}
+h2#form-title{
+font-family:'Orbitron',sans-serif;
+color:#B00000;margin-bottom:10px;
+text-transform:uppercase;font-size:1.7rem
+}
+.led-text{
+font-family:'Orbitron',sans-serif;
+color:#B00000;
+overflow:hidden;white-space:nowrap;
+margin-bottom:15px;font-size:.85rem
+}
+.led-text span{
+display:inline-block;padding-left:100%;
+animation:marquee 15s linear infinite
+}
+@keyframes marquee{
+from{transform:translateX(0)}
+to{transform:translateX(-100%)}
+}
+.input-group{position:relative;margin-bottom:15px}
+input{
+width:100%;
+padding:14px 45px 14px 15px;
+border-radius:10px;font-size:15px;
+color:#fff;background:rgba(0,0,0,.5);
+border:none;outline:none
+}
+input:focus{box-shadow:0 0 10px rgba(225, 6, 0,.5)}
+.mdi-eye,.mdi-eye-off,.mdi-account,.mdi-lock-check{
+position:absolute;right:12px;top:50%;
+transform:translateY(-50%);
+cursor:pointer;color:#B00000;font-size:22px
+}
+button{
+width:100%;padding:14px;border:none;
+border-radius:10px;
+background:linear-gradient(to right,rgba(225, 6, 0,.6),#000);
+color:#fff;font-size:17px;
+cursor:pointer;text-transform:uppercase;
+transition:.3s
+}
+button:hover{background:#B00000;color:#000;transform:translateY(-2px)}
+.toggle-link{
+display:inline-block;margin-top:15px;
+color:#B00000;cursor:pointer;
+text-transform:uppercase;
+padding:10px 15px;border-radius:10px; background:rgba(0,0,0,.4);transition:.3s;
+font-size:.9rem
+}
+.toggle-link:hover{color:#fff;background:rgba(225, 6, 0,.6)}
+.msg-html{
+margin-top:15px;padding:12px;
+background:rgba(225, 6, 0,.2);
+border-left:4px solid #B00000;
+border-radius:10px;
+display:flex;align-items:center;
+gap:10px;font-size:.85rem
+}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body>
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+<canvas id="bgParticles" class="bg-particles"></canvas>
+
+<div class="content">
+<div class="container">
+<img src="https://files.catbox.moe/w6l8pf.jpg">
+<h2 id="form-title">Login</h2>
+<div class="led-text"><span>Bem vindo — registre-se se não tiver conta</span></div>
+
+<form id="auth-form" action="/login" method="POST">
+
+<div class="input-group">
+<input type="text" name="username" placeholder="Usuário" required>
+<i class="mdi mdi-account"></i>
+</div>
+
+<div class="input-group">
+<input type="password" name="password" placeholder="Senha" required id="password-field">
+<i class="mdi mdi-eye" id="toggle-password"></i>
+</div>
+
+<button type="submit">Entrar</button>
+</form>
+
+<a class="toggle-link" onclick="toggleForm()">Não tem uma conta? Registre-se</a>
+<div id="html-messages"></div>
+</div>
+</div>
+
+<script>
+const form = document.getElementById('auth-form');
+const msg = document.getElementById('html-messages');
+
+form.addEventListener('submit', async e => {
+    e.preventDefault();
+    msg.innerHTML = '';
+
+    const isLogin = form.action.endsWith('/login');
+
+    const username = form.username?.value.trim();
+    const password = form.password?.value.trim();
+    const nick = form.nick?.value.trim();
+    const confirm = form.confirmPassword?.value.trim();
+
+    if(!username || !password || (!isLogin && !nick)) {
+        msg.innerHTML = `<div class="msg-html">Preencha todos os campos</div>`;
+        return;
+    }
+
+    if(!isLogin){
+        if(password.length < 6){
+            msg.innerHTML = `<div class="msg-html">Senha muito curta</div>`;
+            return;
+        }
+        if(password !== confirm){
+            msg.innerHTML = `<div class="msg-html">Senhas não coincidem</div>`;
+            return;
+        }
+        if(username.toLowerCase() === nick.toLowerCase()){
+            msg.innerHTML = `<div class="msg-html">O Usuário não pode ser igual ao Nick</div>`;
+            return;
+        }
+    }
+
+    // Envia via POST normal (deixa o Node redirecionar para /docs)
+    form.submit();
+});
+
+function toggleForm(){
+    const title = document.getElementById('form-title');
+    const link = document.querySelector('.toggle-link');
+    
+    if(title.textContent === 'Login'){
+        title.textContent = 'Registro';
+        form.action = '/register';
+        form.innerHTML = `
+        <div class="input-group">
+        <input type="text" name="username" placeholder="Usuário (login)" required>
+        <i class="mdi mdi-account"></i>
+        </div>
+        <div class="input-group">
+        <input type="text" name="nick" placeholder="Nick público" required>
+        <i class="mdi mdi-account"></i>
+        </div>
+        <div class="input-group">
+        <input type="password" name="password" placeholder="Senha" required id="password-field">
+        <i class="mdi mdi-eye" id="toggle-password"></i>
+        </div>
+        <div class="input-group">
+        <input type="password" name="confirmPassword" placeholder="Confirmar senha" required>
+        <i class="mdi mdi-lock-check"></i>
+        </div>
+        <small style="color:#FF2A1F;display:block;margin-bottom:10px;font-size:.8rem">
+        • Mínimo 6 caracteres<br>
+        • Use letras e números<br>
+        • Evite senhas simples
+        </small>
+        <button type="submit">Registrar</button>
+        `;
+        link.textContent='Já tem uma conta? Entrar';
+        addPasswordToggle();
+    } else {
+        location.reload();
+    }
+}
+
+function addPasswordToggle(){
+    const toggle = document.getElementById('toggle-password');
+    const pass = document.getElementById('password-field');
+    if(!toggle || !pass) return;
+    toggle.onclick = () => {
+        pass.type = pass.type === 'password' ? 'text' : 'password';
+        toggle.classList.toggle('mdi-eye-off');
+        toggle.classList.toggle('mdi-eye');
+    }
+}
+addPasswordToggle();
+
+// Fundo de bolinhas/linhas
+const particleCanvas = document.getElementById('bgParticles');
+const particleCtx = particleCanvas.getContext('2d');
+const particleItems = [];
+const particleTotal = 70;
+
+function resizeParticlesCanvas() {
+  particleCanvas.width = window.innerWidth;
+  particleCanvas.height = window.innerHeight;
+}
+
+function initParticles() {
+  particleItems.length = 0;
+  for (let i = 0; i < particleTotal; i++) {
+    particleItems.push({
+      x: Math.random() * particleCanvas.width,
+      y: Math.random() * particleCanvas.height,
+      vx: (Math.random() - 0.5) * 1.2,
+      vy: (Math.random() - 0.5) * 1.2,
+      radius: 1.8 + Math.random() * 2.8
+    });
+  }
+}
+
+function animateParticles() {
+  particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+  for (let i = 0; i < particleItems.length; i++) {
+    const p = particleItems[i];
+    particleCtx.beginPath();
+    particleCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    particleCtx.fillStyle = 'rgba(225, 6, 0, 0.85)';
+    particleCtx.fill();
+
+    for (let j = i + 1; j < particleItems.length; j++) {
+      const q = particleItems[j];
+      const dx = p.x - q.x;
+      const dy = p.y - q.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        particleCtx.beginPath();
+        particleCtx.moveTo(p.x, p.y);
+        particleCtx.lineTo(q.x, q.y);
+        particleCtx.strokeStyle = 'rgba(225, 6, 0, 0.28)';
+        particleCtx.stroke();
+      }
+    }
+
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > particleCanvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > particleCanvas.height) p.vy *= -1;
+  }
+  requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener('resize', () => {
+  resizeParticlesCanvas();
+  initParticles();
+});
+
+resizeParticlesCanvas();
+initParticles();
+animateParticles();
+</script>
+
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

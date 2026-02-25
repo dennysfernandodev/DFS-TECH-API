@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>DFS TECH API - Créditos</title>
+
+<!-- FAVICONS -->
+<link rel="icon" type="image/png" sizes="32x32" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="apple-touch-icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<link rel="shortcut icon" href="https://files.catbox.moe/w6l8pf.jpg">
+
+<!-- Font Awesome e Google Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #E10600;
+  --secondary: #ffffff;
+  --dark: #000000;
+  --light-gray: rgba(0,0,0,0.6);
+  --text: #ffffff;
+  --bg: rgba(0,0,0,0.6);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html, body {width:100%;min-height:100vh;font-family:'Poppins',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;transition:all 0.3s ease;}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 15px;}
+.main-header{position:fixed;top:0;left:0;width:100%;background-color:rgba(0,0,0,0.9);box-shadow:0 2px 20px rgba(0,0,0,0.5);z-index:1000;padding:15px 0;}
+.navbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{width:40px;height:40px;}
+.logo h1{font-size:1.3rem;font-weight:600;color:var(--primary);}
+.nav-menu{display:flex;gap:15px;align-items:center;list-style:none;margin:10px 0 0 0;padding:0;flex-wrap:wrap;}
+.nav-menu li{display:inline-block;}
+.nav-menu a{font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px;font-size:0.95rem;}
+.nav-menu a:hover{color:var(--primary);}
+
+.hero-section{width:100%;padding:120px 20px 50px;position:relative;z-index:1;text-align:center;}
+.hero-section h1{font-size:clamp(2rem,6vw,3rem);color:var(--primary);margin-bottom:15px;}
+.hero-section p{font-size:1.1rem;color:#ccc;line-height:1.6;}
+
+.credits-section{padding:60px 20px;text-align:center;}
+.credits-section h2{font-size:clamp(1.8rem,6vw,2.5rem);color:var(--primary);margin-bottom:40px;}
+.credits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:25px;justify-items:center;}
+.credit-card{background: var(--light-gray);padding:15px;border-radius:15px;box-shadow:0 0 15px rgba(225, 6, 0,0.3);transition:all 0.3s ease;text-align:center;}
+.credit-card img{width:120px;height:120px;border-radius:50%;object-fit:cover;margin-bottom:12px;border:2px solid var(--primary);}
+.credit-card h3{color:var(--secondary);font-size:1.2rem;margin-bottom:5px;}
+.credit-card p{color:#ccc;font-size:0.9rem;}
+
+.main-footer{background-color:var(--dark);color:var(--secondary);padding:40px 0 20px;position:relative;z-index:2;}
+.footer-bottom{border-top:1px solid var(--light-gray);text-align:center;padding-top:15px;color:#ccc;}
+
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body translate="no">
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<canvas id="bgCanvas"></canvas>
+
+<header class="main-header">
+  <div class="container">
+    <nav class="navbar">
+      <a href="/" class="logo" translate="no">
+        <img src="https://files.catbox.moe/w6l8pf.jpg" alt="DFS TECH API">
+        <h1>DFS TECH API</h1>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="/planos"><i class="fa-solid fa-list"></i> Planos</a></li>
+        <li><a href="/direito"><i class="fa-solid fa-copyright"></i> Direitos Autorais</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero-section">
+  <div class="container">
+    <h1>Créditos</h1>
+    <p>Estas são as pessoas que ajudaram a tornar o projeto DFS TECH API possível.</p>
+  </div>
+</section>
+
+<section class="credits-section">
+  <div class="container">
+    <h2>Equipe DFS TECH</h2>
+    <div class="credits-grid">
+      <!-- Exemplo de crédito -->
+      <div class="credit-card" data-aos="fade-up">
+        <img src="https://i.imgur.com/AEkKoIj.jpeg" alt="Tosh DFS TECH">
+        <h3>Tosh DFS TECH</h3>
+        <p>Desenvolvedor principal, criador e designer do projeto.</p>
+      </div>
+      <div class="credit-card" data-aos="fade-up">
+        <img src="https://files.catbox.moe/w6l8pf.jpg" alt="O Brabo DEV">
+        <h3>O Brabo DEV</h3>
+        <p>Desenvolvedor, suporte direto, visão clara.</p>
+      </div>
+      <!-- Adicione mais cartões conforme necessário -->
+    </div>
+  </div>
+</section>
+
+<footer class="main-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>&copy; 2025 DFS TECH API. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  AOS.init();
+  
+  // Partículas de fundo
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  const resizeCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  const particles = [];
+  const particleCount = 80;
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 1.5,
+      vy: (Math.random() - 0.5) * 1.5,
+      radius: 3 + Math.random() * 3,
+      color: `rgba(225, 6, 0,${0.6 + Math.random() * 0.4})`
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(0,0,0,0.6)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let p of particles) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(225, 6, 0,0.3)`;
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    }
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+});
+</script>
+
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>

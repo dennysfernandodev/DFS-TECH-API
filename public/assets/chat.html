@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="https://files.catbox.moe/w6l8pf.jpg">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>☆DFS TECH☆</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'Inter', sans-serif; }
+body { 
+  display: flex; 
+  flex-direction: column; 
+  color: #fff; 
+  padding-top: 110px; 
+  background: url('https://api.dfstech.sbs/uploads/1771034524314.jpg') no-repeat center center; 
+  background-size: cover; 
+  background-attachment: fixed; 
+  overflow-x: hidden;
+}
+#header { 
+  position: fixed; top:0; left:0; width:100%; 
+  display:flex; align-items:center; justify-content:flex-start; 
+  padding:10px 15px; background: rgba(0,0,0,0.75); z-index:1000; 
+  gap:15px;
+  flex-wrap: wrap;
+}
+#perfil-bot { display:flex; align-items:center; gap:10px; color:white; flex-shrink:0; }
+#perfil-bot img { width:50px; height:50px; border-radius:50%; }
+#top-bar { display:flex; gap:10px; flex-shrink:0; flex-wrap: wrap; }
+.top-button { display:flex; align-items:center; gap:6px; background: rgba(255,255,255,0.2); color:white; border:none; font-size:14px; padding:6px 12px; border-radius:6px; cursor:pointer; transition: all 0.3s ease; white-space: nowrap; }
+.top-button:hover { background: linear-gradient(90deg,#B00000,#FF2A1F); color:#fff; }
+#chat-log { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; }
+.bot-message { display:flex; align-items:flex-start; gap:8px; max-width:80%; background-color:#e4e6eb; padding:12px 16px; border-radius:12px; animation:slideIn 0.3s ease; }
+.bot-message img { width:32px; height:32px; border-radius:50%; margin-top:2px; }
+.bot-message .text { color:#000; word-wrap:break-word; line-height:1.5; }
+#chat-log p.user { max-width:60%; padding:12px 16px; border-radius:12px; background-color:#444; color:#fff; margin-left:auto; text-align:right; animation:slideIn 0.3s ease; word-wrap:break-word; }
+#chat-input-container { display:flex; gap:8px; padding:12px; background-color:rgba(0,0,0,0.5); border-top:1px solid #333; flex-wrap: wrap; }
+#chat-input { flex:1; padding:12px; border-radius:8px; border:1px solid #555; background-color:rgba(0,0,0,0.7); color:#fff; min-width:100px; }
+#send-btn,#audio-btn { display:flex; align-items:center; justify-content:center; padding:12px 18px; background-color:#444; color:white; border:none; border-radius:8px; cursor:pointer; transition: all 0.3s ease; }
+#send-btn:hover,#audio-btn:hover { background: linear-gradient(90deg,#B00000,#FF2A1F); }
+@keyframes slideIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.svg-icon { width:16px; height:16px; fill:white; }
+
+/* RESPONSIVO PARA CELULAR */
+@media (max-width:600px){
+  #perfil-bot div { font-size:0.8em; }
+  #top-bar .top-button { font-size:12px; padding:5px 10px; }
+  #perfil-bot img { width:40px; height:40px; }
+  #chat-input { min-width:80px; }
+}
+</style>
+<link rel="stylesheet" href="/assets/css/dfs-standard.css">
+</head>
+<body>
+<canvas id="dfs-bg-canvas" aria-hidden="true"></canvas>
+
+<div id="header">
+  <div id="perfil-bot">
+    <img src="https://api.dfstech.sbs/uploads/1771034690801.jpg" alt="Bot Profile">
+    <div>
+      <div><strong>DFS TECH IA</strong></div>
+      <div>Assistente</div>
+    </div>
+  </div>
+  <div id="top-bar">
+    <button class="top-button" onclick="window.open('/logistica')">
+      <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 3h18v2H3V3zm0 16h18v2H3v-2zm0-8h18v2H3v-2z"/></svg>Gerar imagem 
+    </button>
+    <button class="top-button" onclick="window.open('/credito')">
+      <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.84L19.53 19H4.47L12 5.84zM11 10h2v5h-2v-5zm0 6h2v2h-2v-2z"/></svg>Créditos
+    </button>
+  </div>
+</div>
+
+<div id="chat-log"></div>
+
+<div id="chat-input-container">
+  <input type="text" id="chat-input" placeholder="Digite sua mensagem..." />
+  <button id="audio-btn">
+    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h-2z"/></svg>
+  </button>
+  <button id="send-btn">
+    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>Enviar
+  </button>
+</div>
+
+<script src="https://js.puter.com/v2/"></script>
+
+<script>
+const chatLog = document.getElementById('chat-log');
+const chatInput = document.getElementById('chat-input');
+const sendBtn = document.getElementById('send-btn');
+const audioBtn = document.getElementById('audio-btn');
+
+function adicionarMensagem(texto, classe) {
+  const container = document.createElement(classe==='bot'?'div':'p');
+  container.className = classe==='bot'?'bot-message':'user';
+  if(classe==='bot'){
+    const img = document.createElement('img');
+    img.src='https://api.dfstech.sbs/uploads/1771034690801.jpg';
+    img.alt='Bot';
+    const msg = document.createElement('div');
+    msg.className='text';
+    msg.innerHTML = texto;
+    container.appendChild(img);
+    container.appendChild(msg);
+  } else {
+    container.innerHTML = texto;
+  }
+  chatLog.appendChild(container);
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+async function conversarComIA(mensagem) {
+  try {
+    const resposta = await puter.ai.chat(mensagem);
+    adicionarMensagem(resposta, "bot");
+  } catch (e) {
+    console.error(e);
+    adicionarMensagem("Erro ao conectar com a IA.", "bot");
+  }
+}
+
+const CHAT_API_KEY = (
+  new URLSearchParams(window.location.search).get("apikey") ||
+  localStorage.getItem("dfs_api_key") ||
+  ""
+).trim();
+
+if (CHAT_API_KEY) {
+  localStorage.setItem("dfs_api_key", CHAT_API_KEY);
+}
+
+async function tocarMusica(q) {
+  if(!q) return adicionarMensagem("Use: !play nome da música", 'bot');
+  if (!CHAT_API_KEY) return adicionarMensagem("Informe ?apikey=... na URL para usar o player.", "bot");
+  try {
+    const res = await fetch(`https://api.dfstech.sbs/api/pesquisa/youtube?nome=${encodeURIComponent(q)}&apikey=${encodeURIComponent(CHAT_API_KEY)}`);
+    const data = await res.json();
+    const resultados = Array.isArray(data.resultado)?data.resultado:[];
+    if(!resultados.length) return adicionarMensagem("Nenhum resultado encontrado.", 'bot');
+    const video = resultados.find(v=>v.videoId||v.url);
+    if(!video) return adicionarMensagem("Vídeo não encontrado.", 'bot');
+    const mensagem = `> Música escolhida: <strong>${video.title}</strong>\n> Autor: ${video.author?.name||'Desconhecido'}`;
+    adicionarMensagem(`<img src="${video.thumbnail||video.image}" style="width:100px;vertical-align:middle;margin-right:5px;"> ${mensagem}`, 'bot');
+
+    const audioPlayer = document.createElement('audio');
+    audioPlayer.src = `https://api.dfstech.sbs/api/download/play?nome=${encodeURIComponent(q)}&apikey=${encodeURIComponent(CHAT_API_KEY)}`;
+    audioPlayer.controls = true;
+    audioPlayer.autoplay = true;
+    audioPlayer.style.marginTop = '8px';
+    chatLog.appendChild(audioPlayer);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  } catch(e){
+    console.error("Erro no play:", e);
+    adicionarMensagem("Erro ao processar música.", 'bot');
+  }
+}
+
+async function tocarVideo(q){
+  if(!q) return adicionarMensagem("Use: !playvídeo nome do vídeo", 'bot');
+  if (!CHAT_API_KEY) return adicionarMensagem("Informe ?apikey=... na URL para usar o player.", "bot");
+  try {
+    const res = await fetch(`https://api.dfstech.sbs/api/pesquisa/youtube?nome=${encodeURIComponent(q)}&apikey=${encodeURIComponent(CHAT_API_KEY)}`);
+    const data = await res.json();
+    if(!Array.isArray(data.resultado)||data.resultado.length===0) return adicionarMensagem("Nenhum resultado encontrado.", 'bot');
+    const video = data.resultado.find(v=>v.type==='video');
+    if(!video) return adicionarMensagem("Vídeo não encontrado.", 'bot');
+    const mensagem = `> Vídeo escolhido: <strong>${video.title}</strong>\n> Autor: ${video.author?.name||'Desconhecido'}`;
+    adicionarMensagem(`<img src="${video.thumbnail||video.image}" style="width:100px;vertical-align:middle;margin-right:5px;"> ${mensagem}`, 'bot');
+
+    const videoPlayer = document.createElement('video');
+    videoPlayer.src = `https://api.dfstech.sbs/api/download/playvd?nome=${encodeURIComponent(q)}&apikey=${encodeURIComponent(CHAT_API_KEY)}`;
+    videoPlayer.controls = true;
+    videoPlayer.autoplay = true;
+    videoPlayer.style.width='100%';
+    chatLog.appendChild(videoPlayer);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  } catch(e){
+    console.error("Erro no playvideo:", e);
+    adicionarMensagem("Erro ao processar vídeo.", 'bot');
+  }
+}
+
+sendBtn.onclick = () => {
+  const texto = chatInput.value.trim();
+  if(!texto) return;
+  adicionarMensagem(texto, 'user');
+  chatInput.value = '';
+
+  if(texto.toLowerCase().startsWith('!play ')){
+    tocarMusica(texto.slice(6).trim());
+    return;
+  }
+
+  if(texto.toLowerCase().startsWith('!playvídeo ')){
+    tocarVideo(texto.slice(11).trim());
+    return;
+  }
+
+  conversarComIA(texto);
+};
+
+chatInput.addEventListener('keydown', e => { if(e.key==='Enter') sendBtn.click(); });
+
+audioBtn.onclick = () => {
+  const synth = window.speechSynthesis;
+  const ultimoBot = [...chatLog.querySelectorAll('.bot-message .text')].pop();
+  if(ultimoBot){
+    const utter = new SpeechSynthesisUtterance(ultimoBot.textContent);
+    utter.lang = 'pt-BR';
+    synth.speak(utter);
+  }
+};
+</script>
+<script src="/assets/js/dfs-standard.js"></script>
+</body>
+</html>
